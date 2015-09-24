@@ -1,7 +1,7 @@
 package smsgateway;
 
 /**
- * Created by clouway on 15-8-25.
+ * @author Slavi Dichkov (slavidichkof@gmail.com)
  */
 public class Sms {
     public Sms(String mesage, String telephoneNumber, String heading) {

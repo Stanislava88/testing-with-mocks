@@ -1,7 +1,7 @@
 package service;
 
 /**
- * Created by clouway on 15-8-25.
+ * @author Slavi Dichkov (slavidichkof@gmail.com)
  */
 public interface Validator {
     boolean validate(String toValidate);

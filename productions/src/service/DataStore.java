@@ -1,7 +1,7 @@
 package service;
 
 /**
- * Created by clouway on 15-9-8.
+ * @author Slavi Dichkov (slavidichkof@gmail.com)
  */
 public interface DataStore {
     void addInData(String name, String age);

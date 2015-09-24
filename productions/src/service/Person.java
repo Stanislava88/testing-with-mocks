@@ -1,22 +1,14 @@
 package service;
 
 /**
- * Created by clouway on 15-8-25.
+ * @author Slavi Dichkov (slavidichkof@gmail.com)
  */
 public class Person {
-    private String age;
-    private String name;
+    public final String age;
+    public final String name;
 
     public Person(String name, String age) {
         this.name = name;
         this.age = age;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public String getName() {
-        return name;
     }
 }

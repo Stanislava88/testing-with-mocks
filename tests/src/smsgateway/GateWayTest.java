@@ -7,7 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * Created by clouway on 15-8-25.
+ * @author Slavi Dichkov (slavidichkof@gmail.com)
  */
 public class GateWayTest {
     @Rule

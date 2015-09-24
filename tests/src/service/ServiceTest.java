@@ -10,7 +10,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertSame;
 
 /**
- * Created by clouway on 15-8-25.
+ * @author Slavi Dichkov (slavidichkof@gmail.com)
  */
 public class ServiceTest {
     @Rule

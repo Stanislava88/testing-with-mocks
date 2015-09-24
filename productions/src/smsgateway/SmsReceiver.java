@@ -1,7 +1,7 @@
 package smsgateway;
 
 /**
- * Created by clouway on 15-8-25.
+ * @author Slavi Dichkov (slavidichkof@gmail.com)
  */
 public interface SmsReceiver {
     boolean receive(Sms sms);
