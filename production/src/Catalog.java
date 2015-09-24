@@ -1,7 +1,9 @@
 import java.util.Map;
 
 /**
- * Created by clouway on 15-8-7.
+ * Catalog is an in-memory catalog which is holding all available products in the {@link WareHouse}
+ *
+ * @author Slavi Dichkof slavidichkof@gmail.com
  */
 public class Catalog {
     private final Map<String, Product> productByName;
