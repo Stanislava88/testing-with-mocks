@@ -4,12 +4,12 @@ package com.clouway.Sms;
  * Created by clouway on 15-9-25.
  */
 public class Sender {
-    public final Gateway gateway;
-    public final Reciever reciever;
+    public final SmsGateway smsGateway;
+    public final Recipient reciever;
 
-    public Sender(Reciever reciever, Gateway gateway) {
+    public Sender(Recipient reciever, SmsGateway smsGateway) {
         this.reciever = reciever;
-        this.gateway = gateway;
+        this.smsGateway = smsGateway;
     }
 
     public void sendMessage(Message message) {
@@ -17,7 +17,7 @@ public class Sender {
             return;
         }
         if (message.text.length() >= 1 && message.text.length() <= 120 && message.header.length() > 1 && reciever.getPhoneNumber().length() > 0) {
-            gateway.recieveMessage(message, reciever);
+            smsGateway.sendMessage(message, reciever);
         }
 
     }

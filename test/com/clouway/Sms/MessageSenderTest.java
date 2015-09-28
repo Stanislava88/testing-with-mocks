@@ -14,27 +14,27 @@ public class MessageSenderTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     @Mock
-    Gateway gateway;
+    SmsGateway smsGateway;
 
     @Test
-    public void HappyPathTest() {
+    public void happyPathTest() {
         final Message message = new Message("Header", "Text");
-        final Reciever reciever = new Reciever("0883497259");
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient("0883497259");
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            oneOf(gateway).recieveMessage(message, reciever);
+            oneOf(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
 
     }
 
     @Test
-    public void TryToSendMessageWithMoreThanOneHundredAndTwentySymbols() {
+    public void tryToSendMessageWithMoreThanOneHundredAndTwentySymbols() {
         final Message message = new Message("Header", "TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText");
-        final Reciever reciever = new Reciever("0883497259");
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient("0883497259");
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            never(gateway).recieveMessage(message, reciever);
+            never(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
     }
@@ -43,70 +43,70 @@ public class MessageSenderTest {
 
 
     @Test
-    public void TryToSendMessageWithLessThanOneSymbol() {
+    public void tryToSendMessageWithLessThanOneSymbol() {
         final Message message = new Message("Header", "");
-        final Reciever reciever = new Reciever("0883497259");
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient("0883497259");
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            never(gateway).recieveMessage(message, reciever);
+            never(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
     }
 
     @Test
-    public void TryToSendMessageWithEmptyHeader() {
+    public void tryToSendMessageWithEmptyHeader() {
         final Message message = new Message("", "Text");
-        final Reciever reciever = new Reciever("0883497259");
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient("0883497259");
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            never(gateway).recieveMessage(message, reciever);
+            never(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
 
     }
 
     @Test
-    public void TryToSendMessageWithEmptyReciever() {
+    public void tryToSendMessageWithEmptyReciever() {
         final Message message = new Message("Header", "Text");
-        final Reciever reciever = new Reciever("");
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient("");
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            never(gateway).recieveMessage(message, reciever);
+            never(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
 
     }
 
     @Test
-    public void TryToSendMessageWithNullText() {
+    public void tryToSendMessageWithNullText() {
         final Message message = new Message("Header", null);
-        final Reciever reciever = new Reciever("0883497259");
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient("0883497259");
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            never(gateway).recieveMessage(message, reciever);
+            never(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
 
     }
 
     @Test
-    public void TryToSendMessageWithNullHeader() {
+    public void tryToSendMessageWithNullHeader() {
         final Message message = new Message(null, "Text");
-        final Reciever reciever = new Reciever("0883497259");
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient("0883497259");
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            never(gateway).recieveMessage(message, reciever);
+            never(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
     }
 
     @Test
-    public void TryToSendMessageWithNullReciever() {
+    public void tryToSendMessageWithNullReciever() {
         final Message message = new Message("Header", "Text");
-        final Reciever reciever = new Reciever(null);
-        final Sender sender = new Sender(reciever, gateway);
+        final Recipient recipient = new Recipient(null);
+        final Sender sender = new Sender(recipient, smsGateway);
         context.checking(new Expectations() {{
-            never(gateway).recieveMessage(message, reciever);
+            never(smsGateway).sendMessage(message, recipient);
         }});
         sender.sendMessage(message);
     }
