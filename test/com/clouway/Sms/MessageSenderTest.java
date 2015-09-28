@@ -20,7 +20,7 @@ public class MessageSenderTest {
     public void HappyPathTest() {
         final Message message = new Message("Header", "Text");
         final Reciever reciever = new Reciever("0883497259");
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             oneOf(gateway).recieveMessage(message, reciever);
         }});
@@ -32,7 +32,7 @@ public class MessageSenderTest {
     public void TryToSendMessageWithMoreThanOneHundredAndTwentySymbols() {
         final Message message = new Message("Header", "TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText");
         final Reciever reciever = new Reciever("0883497259");
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             never(gateway).recieveMessage(message, reciever);
         }});
@@ -46,7 +46,7 @@ public class MessageSenderTest {
     public void TryToSendMessageWithLessThanOneSymbol() {
         final Message message = new Message("Header", "");
         final Reciever reciever = new Reciever("0883497259");
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             never(gateway).recieveMessage(message, reciever);
         }});
@@ -57,7 +57,7 @@ public class MessageSenderTest {
     public void TryToSendMessageWithEmptyHeader() {
         final Message message = new Message("", "Text");
         final Reciever reciever = new Reciever("0883497259");
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             never(gateway).recieveMessage(message, reciever);
         }});
@@ -69,7 +69,7 @@ public class MessageSenderTest {
     public void TryToSendMessageWithEmptyReciever() {
         final Message message = new Message("Header", "Text");
         final Reciever reciever = new Reciever("");
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             never(gateway).recieveMessage(message, reciever);
         }});
@@ -81,7 +81,7 @@ public class MessageSenderTest {
     public void TryToSendMessageWithNullText() {
         final Message message = new Message("Header", null);
         final Reciever reciever = new Reciever("0883497259");
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             never(gateway).recieveMessage(message, reciever);
         }});
@@ -93,7 +93,7 @@ public class MessageSenderTest {
     public void TryToSendMessageWithNullHeader() {
         final Message message = new Message(null, "Text");
         final Reciever reciever = new Reciever("0883497259");
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             never(gateway).recieveMessage(message, reciever);
         }});
@@ -102,9 +102,9 @@ public class MessageSenderTest {
 
     @Test
     public void TryToSendMessageWithNullReciever() {
-        final Message message = new Message(null, "Text");
+        final Message message = new Message("Header", "Text");
         final Reciever reciever = new Reciever(null);
-        Sender sender = new Sender(reciever, gateway);
+        final Sender sender = new Sender(reciever, gateway);
         context.checking(new Expectations() {{
             never(gateway).recieveMessage(message, reciever);
         }});

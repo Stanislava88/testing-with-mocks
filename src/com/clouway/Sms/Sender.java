@@ -13,11 +13,11 @@ public class Sender {
     }
 
     public void sendMessage(Message message) {
-        if(message.text==null || message.header==null || reciever.getPhoneNumber()==null){
+        if (message.text == null || message.header == null || reciever.getPhoneNumber() == null) {
             return;
         }
-        if(message.text.length()>=1 && message.text.length()<=120 && message.header.length()>1 && reciever.getPhoneNumber().length()>0){
-            gateway.recieveMessage(message,reciever);
+        if (message.text.length() >= 1 && message.text.length() <= 120 && message.header.length() > 1 && reciever.getPhoneNumber().length() > 0) {
+            gateway.recieveMessage(message, reciever);
         }
 
     }

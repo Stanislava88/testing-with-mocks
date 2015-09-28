@@ -10,8 +10,8 @@ public class Reciever {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPhoneNumber(){
-        return  phoneNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
 }
