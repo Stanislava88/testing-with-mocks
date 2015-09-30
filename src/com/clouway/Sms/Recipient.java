@@ -13,5 +13,4 @@ public class Recipient {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
 }

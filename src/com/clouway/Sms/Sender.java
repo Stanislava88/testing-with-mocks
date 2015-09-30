@@ -7,8 +7,8 @@ public class Sender {
     public final SmsGateway smsGateway;
     public final Recipient reciever;
 
-    public Sender(Recipient reciever, SmsGateway smsGateway) {
-        this.reciever = reciever;
+    public Sender(Recipient recipient, SmsGateway smsGateway) {
+        this.reciever = recipient;
         this.smsGateway = smsGateway;
     }
 
