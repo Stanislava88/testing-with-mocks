@@ -16,20 +16,20 @@ import org.junit.Test;
 public class SMSTests {
 
     @Rule
-     public JUnitRuleMockery context = new JUnitRuleMockery();
+    public JUnitRuleMockery context = new JUnitRuleMockery();
     @Mock
     Gateway gateway;
     @Mock
     Validator validator;
 
     @Test
-    public void sendSMS(){
+    public void sendSMS() {
 
-        SmsSendService sendService = new SmsSendService(gateway,validator);
+        SmsSendService sendService = new SmsSendService(gateway, validator);
 
-        SMS sms = new SMS("0885342134","do ivan","zdravei ivan");
+        SMS sms = new SMS("0885342134", "do ivan", "zdravei ivan");
 
-        context.checking(new Expectations(){
+        context.checking(new Expectations() {
             {
                 oneOf(validator).isValid(sms);
                 will(returnValue(true));
@@ -42,11 +42,11 @@ public class SMSTests {
     @Test
     public void sendInvalidSMS() throws Exception {
 
-        SmsSendService sendService = new SmsSendService(gateway,validator);
+        SmsSendService sendService = new SmsSendService(gateway, validator);
 
-        SMS sms = new SMS(" ","do ivan","zdravei ivan");
+        SMS sms = new SMS(" ", "do ivan", "zdravei ivan");
 
-        context.checking(new Expectations(){
+        context.checking(new Expectations() {
             {
                 oneOf(validator).isValid(sms);
                 will(returnValue(false));
