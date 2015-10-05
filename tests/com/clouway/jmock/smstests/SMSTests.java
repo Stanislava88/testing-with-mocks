@@ -1,9 +1,6 @@
 package com.clouway.jmock.smstests;
 
-import com.clouway.test.jmock.sms.Gateway;
-import com.clouway.test.jmock.sms.SMS;
-import com.clouway.test.jmock.sms.SmsSendService;
-import com.clouway.test.jmock.sms.Validator;
+import com.clouway.test.jmock.sms.*;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -27,7 +24,9 @@ public class SMSTests {
 
         SmsSendService sendService = new SmsSendService(gateway, validator);
 
-        SMS sms = new SMS("0885342134", "do ivan", "zdravei ivan");
+        RandomMessageGenerator randomMessageGenerator = new RandomMessageGenerator();
+
+        SMS sms = new SMS("0885342134", "do ivan", randomMessageGenerator.generateMessage("abc",10));
 
         context.checking(new Expectations() {
             {
@@ -44,7 +43,11 @@ public class SMSTests {
 
         SmsSendService sendService = new SmsSendService(gateway, validator);
 
-        SMS sms = new SMS(" ", "do ivan", "zdravei ivan");
+        RandomMessageGenerator randomMessageGenerator = new RandomMessageGenerator();
+
+        SMS sms = new SMS(" ", "do ivan",randomMessageGenerator.generateMessage("abc",10) );
+
+
 
         context.checking(new Expectations() {
             {
