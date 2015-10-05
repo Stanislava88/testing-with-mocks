@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Ivaylo Penev(ipenev91@gmail.com) on 9/30/15
+ * @author Ivaylo Penev(ipenev91@gmail.com)
  */
 public class SMSTests {
 
