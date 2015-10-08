@@ -13,7 +13,7 @@ public class PeopleRegisterService {
     }
 
     public void register(Person person) {
-        if (ageValidator.isBetween10and100(person.age)) {
+        if (ageValidator.isBetweenLowerAndHigherLimit(person.age)) {
             personDatabase.addPersonToDataBase(person);
         }
     }
