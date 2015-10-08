@@ -13,7 +13,7 @@ public class PeopleRegisterService {
     }
 
     public void register(Person person) {
-        if (ageValidator.isValid(person.age)) {
+        if (ageValidator.isBetween10and100(person.age)) {
             personDatabase.addPersonToDataBase(person);
         }
     }
@@ -22,7 +22,7 @@ public class PeopleRegisterService {
         if (person == null) {
             return false;
         } else {
-            return ageValidator.isAdult(personDatabase.getByName(person.name).age);
+            return ageValidator.isOver18(personDatabase.getByName(person.name).age);
         }
     }
 }
