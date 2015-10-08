@@ -22,7 +22,7 @@ public class PeopleRegisterServiceTest {
     AgeValidator ageValidator;
 
     @Test
-    public void happyPath() {
+    public void ageInBoundaries() {
         final Person person = new Person("John Smith", "30");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
@@ -34,8 +34,8 @@ public class PeopleRegisterServiceTest {
     }
 
     @Test
-    public void ageUnder10() {
-        final Person person = new Person("Christiano Ronaldo Jr.", "5");
+    public void ageLowerThanLowerLimit() {
+        final Person person = new Person("Christiano Ronaldo Jr.", "9");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
             oneOf(ageValidator).isBetween10and100(person.age);
@@ -46,7 +46,7 @@ public class PeopleRegisterServiceTest {
     }
 
     @Test
-    public void ageOver100() {
+    public void ageHigherThanHigherLimit() {
         final Person person = new Person("Santa Claus", "2500");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
@@ -58,7 +58,32 @@ public class PeopleRegisterServiceTest {
     }
 
     @Test
-    public void ageIsEmpty() {
+    public void ageEqualToHigherLimit() {
+        final Person person = new Person("Lili Ivanova", "100");
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
+        mockery.checking(new Expectations() {{
+            oneOf(ageValidator).isBetween10and100(person.age);
+            will(returnValue(true));
+            oneOf(personDatabase).addPersonToDataBase(person);
+        }});
+        peopleRegisterService.register(person);
+    }
+
+    @Test
+    public void ageEqualToLowerLimit(){
+        final Person person = new Person("Stuart Little", "10");
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
+        mockery.checking(new Expectations() {{
+            oneOf(ageValidator).isBetween10and100(person.age);
+            will(returnValue(true));
+            oneOf(personDatabase).addPersonToDataBase(person);
+        }});
+        peopleRegisterService.register(person);
+    }
+
+
+    @Test
+    public void emptyAge() {
         final Person person = new Person("John Doe", "");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
@@ -95,7 +120,7 @@ public class PeopleRegisterServiceTest {
     }
 
     @Test
-    public void personIsUnder18() {
+    public void ageUnderEighteen() {
         final Person person = new Person("Christiano Ronaldo Jr", "5");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
@@ -108,7 +133,7 @@ public class PeopleRegisterServiceTest {
     }
 
     @Test
-    public void emptyPersonName() {
+    public void emptyName() {
         final Person person = new Person("", "23");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
@@ -136,7 +161,7 @@ public class PeopleRegisterServiceTest {
     }
 
     @Test
-    public void bothPersonNameAndPersonAgeAreEmpty() {
+    public void bothNameAndAgeAreEmpty() {
         final Person person = new Person("", "");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
