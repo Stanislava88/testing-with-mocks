@@ -6,5 +6,4 @@ package com.clouway.Service;
 public interface AgeValidator {
     boolean isBetween10and100(String age);
     boolean isOver18(String age);
-
 }
