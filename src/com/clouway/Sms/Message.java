@@ -11,4 +11,12 @@ public class Message {
         this.header = header;
         this.text = text;
     }
+
+    public boolean checkIfMessageIsAppropriate() {
+        if (text.length() >= 1 && text.length() <= 120 && header.length() > 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

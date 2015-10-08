@@ -29,7 +29,7 @@ public class FakeMessageSenderTest {
     }
 
     @Test
-    public void tryToSendMessageWithMoreThanOneHundredAndTwentySymbols(){
+    public void messageIsTooLong(){
         Message message = new Message("Zdravey","Kak siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii?");
         Recipient recipient = new Recipient("0883497259");
         Sender sender = new Sender(recipient,fakeSmsGateway);
@@ -40,7 +40,7 @@ public class FakeMessageSenderTest {
     }
 
     @Test
-    public void tryToSendMessageWithLessThanOneSymbol(){
+    public void messageIsTooShort(){
         Message message = new Message("Zdravey","");
         Recipient recipient = new Recipient("0883497259");
         Sender sender = new Sender(recipient,fakeSmsGateway);
@@ -51,7 +51,7 @@ public class FakeMessageSenderTest {
     }
 
     @Test
-    public void tryToSendMessageWithEmptyHeader(){
+    public void emptyHeader(){
         Message message = new Message("","Kak si?");
         Recipient recipient = new Recipient("0883497259");
         Sender sender = new Sender(recipient,fakeSmsGateway);
@@ -62,7 +62,7 @@ public class FakeMessageSenderTest {
     }
 
     @Test
-    public void tryToSendMessageWithEmptyReciever(){
+    public void emptyReciever(){
         Message message = new Message("Zdravey","Kak si?");
         Recipient recipient = new Recipient("");
         Sender sender = new Sender(recipient,fakeSmsGateway);
@@ -73,7 +73,7 @@ public class FakeMessageSenderTest {
     }
 
     @Test
-    public void tryToSendMessageWithNullText(){
+    public void textIsNull(){
         Message message = new Message("Zdravey",null);
         Recipient recipient = new Recipient("");
         Sender sender = new Sender(recipient,fakeSmsGateway);
@@ -84,7 +84,7 @@ public class FakeMessageSenderTest {
     }
 
     @Test
-    public void tryToSendMessageWithNullHeader(){
+    public void headerIsNull(){
         Message message = new Message(null,"Kak si?");
         Recipient recipient = new Recipient("");
         Sender sender = new Sender(recipient,fakeSmsGateway);
@@ -95,7 +95,7 @@ public class FakeMessageSenderTest {
     }
 
     @Test
-    public void tryToSendMessageWithNullRecipient(){
+    public void recipientIsNull(){
         Message message = new Message("Zdravey","Kak si?");
         Recipient recipient = new Recipient(null);
         Sender sender = new Sender(recipient,fakeSmsGateway);

@@ -12,147 +12,147 @@ import static org.junit.Assert.fail;
 /**
  * Created by clouway on 15-9-30.
  */
-public class ServiceTest {
+public class PeopleRegisterServiceTest {
     @Rule
     public JUnitRuleMockery mockery = new JUnitRuleMockery();
 
     @Mock
     PersonDatabase personDatabase;
     @Mock
-    Validator validator;
+    AgeValidator ageValidator;
 
     @Test
     public void happyPath() {
         final Person person = new Person("John Smith", "30");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(validator).validateIfAgeIsOver10AndUnder100(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver10AndUnder100(person.age);
             will(returnValue(true));
             oneOf(personDatabase).addPersonToDataBase(person);
         }});
-        service.checkIfPersonIsSuitableToBeAddedInDataBase(person);
+        peopleRegisterService.register(person);
     }
 
     @Test
-    public void testWhatHappensIfAgeIsUnder10() {
+    public void ageUnder10() {
         final Person person = new Person("Christiano Ronaldo Jr.", "5");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(validator).validateIfAgeIsOver10AndUnder100(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver10AndUnder100(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
-        service.checkIfPersonIsSuitableToBeAddedInDataBase(person);
+        peopleRegisterService.register(person);
     }
 
     @Test
-    public void testWhatHappensIfAgeIsOver100() {
+    public void ageOver100() {
         final Person person = new Person("Santa Claus", "2500");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(validator).validateIfAgeIsOver10AndUnder100(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver10AndUnder100(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
-        service.checkIfPersonIsSuitableToBeAddedInDataBase(person);
+        peopleRegisterService.register(person);
     }
 
     @Test
-    public void testWhatHappensIfAgeIsEmpty() {
+    public void ageIsEmpty() {
         final Person person = new Person("John Doe", "");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(validator).validateIfAgeIsOver10AndUnder100(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver10AndUnder100(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
-        service.checkIfPersonIsSuitableToBeAddedInDataBase(person);
+        peopleRegisterService.register(person);
     }
 
     @Test
-    public void testWhatHappensIfAgeIsNull() {
+    public void ageIsNull() {
         final Person person = new Person("Uknown", null);
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(validator).validateIfAgeIsOver10AndUnder100(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver10AndUnder100(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
-        service.checkIfPersonIsSuitableToBeAddedInDataBase(person);
+        peopleRegisterService.register(person);
     }
 
     @Test
     public void getAgeHappyPath() {
         final Person person = new Person("Kristiyan Petkov", "24");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(validator).validateIfAgeIsOver18(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver18(person.age);
             will(returnValue(true));
         }});
-        service.checkIfAgeIsUnderOrOver18Years(person);
+        peopleRegisterService.isAdult(person);
     }
 
     @Test
-    public void testWhatHappensIfPersonIsUnder18() {
+    public void personIsUnder18() {
         final Person person = new Person("Christiano Ronaldo Jr", "5");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(validator).validateIfAgeIsOver18(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver18(person.age);
             will(returnValue(false));
         }});
-        service.checkIfAgeIsUnderOrOver18Years(person);
+        peopleRegisterService.isAdult(person);
     }
 
     @Test
-    public void testWhatHappensIfPersonNameIsEmpty() {
+    public void emptyPersonName() {
         final Person person = new Person("", "23");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(validator).validateIfAgeIsOver18(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver18(person.age);
             will(returnValue(false));
 
         }});
-        service.checkIfAgeIsUnderOrOver18Years(person);
+        peopleRegisterService.isAdult(person);
 
     }
 
     @Test
-    public void testWhatHappensIfPersonAgeIsEmpty() {
+    public void emptyPersonAge() {
         final Person person = new Person("John", "");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(validator).validateIfAgeIsOver18(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver18(person.age);
             will(returnValue(false));
         }});
-        service.checkIfAgeIsUnderOrOver18Years(person);
+        peopleRegisterService.isAdult(person);
     }
 
     @Test
-    public void testWhatHappensIfBothPersonAndAgeAreEmpty() {
+    public void bothPersonNameAndPersonAgeAreEmpty() {
         final Person person = new Person("", "");
-        final Service service = new Service(validator, personDatabase);
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(validator).validateIfAgeIsOver18(person.age);
+            oneOf(ageValidator).validateIfAgeIsOver18(person.age);
             will(returnValue(false));
         }});
-        service.checkIfAgeIsUnderOrOver18Years(person);
+        peopleRegisterService.isAdult(person);
     }
 
     @Test
-    public void testWhatHappensIfPersonIsNull() {
+    public void personIsNull() {
         final Person person = null;
-        final Service service = new Service(validator, personDatabase);
-        assertEquals(false, service.checkIfAgeIsUnderOrOver18Years(person));
+        final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
+        assertEquals(false, peopleRegisterService.isAdult(person));
     }
 
 

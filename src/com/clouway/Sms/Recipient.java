@@ -13,4 +13,12 @@ public class Recipient {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public boolean checkIfRecipientNumberIsAppropriate(){
+        if(phoneNumber.length()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
