@@ -6,5 +6,5 @@ import com.clouway.test.jmock.sms.SMS;
  * @author Ivaylo Penev(ipenev91@gmail.com)
  */
 public interface Validator {
-    boolean isValid(SMS sms);
+    boolean isValidMessage(SMS sms);
 }

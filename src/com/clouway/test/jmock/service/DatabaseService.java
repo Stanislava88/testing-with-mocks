@@ -5,6 +5,7 @@ package com.clouway.test.jmock.service;
  * @author Ivaylo Penev(ipenev91@gmail.com)
  */
 public class DatabaseService {
+
     private Service service;
     private Validator validator;
 
@@ -13,7 +14,7 @@ public class DatabaseService {
      * @param validator is validator which validate user before registration.
      */
 
-    public DatabaseService(Service service, Validator validator) {
+    public DatabaseService(Validator validator,Service service) {
         this.service = service;
         this.validator = validator;
     }
@@ -22,9 +23,9 @@ public class DatabaseService {
      * @param user is user which will be register in System.
      */
 
-    public void register(User user) {
-        if (validator.isValid(user.age)) {
-            service.register(user);
+    public void registerUser(User user) {
+        if (validator.isValidAgeBetween10and100(user.age)) {
+            service.registerUser(user);
         }
     }
 }

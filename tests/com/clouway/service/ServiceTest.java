@@ -21,77 +21,79 @@ public class ServiceTest {
     Validator validator;
 
     @Test
-    public void registerValidUserToDatabase() {
+    public void tryToRegisterValidUser() throws Exception {
 
-        DatabaseService databaseService = new DatabaseService(service, validator);
-        User user = new User("Ivaylo", "24");
+        final DatabaseService databaseService = new DatabaseService(validator,service);
+        final User user = new User("Ivan", "12");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValid(user.age);
+                oneOf(validator).isValidAgeBetween10and100(user.age);
                 will(returnValue(true));
-                oneOf(service).register(user);
+                oneOf(service).registerUser(user);
             }
         });
-        databaseService.register(user);
-
+        databaseService.registerUser(user);
     }
 
     @Test
     public void tryToRegisterNoAdultUser() throws Exception {
-        DatabaseService databaseService = new DatabaseService(service, validator);
-        User user = new User("Ivan", "17");
+        final DatabaseService databaseService = new DatabaseService(validator, service);
+        final User user = new User("Ivan", "9");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValid(user.age);
+                oneOf(validator).isValidAgeBetween10and100(user.age);
                 will(returnValue(false));
+                never(service).registerUser(user);
             }
         });
-        databaseService.register(user);
+        databaseService.registerUser(user);
     }
 
     @Test
     public void tryToRegisterUserWithAgeOverThanAllowed() throws Exception {
-        DatabaseService databaseService = new DatabaseService(service, validator);
-        User user = new User("Bai Georgi", "102");
+
+        final DatabaseService databaseService = new DatabaseService(validator, service);
+        final User user = new User("Bai Georgi", "102");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValid(user.age);
+                oneOf(validator).isValidAgeBetween10and100(user.age);
                 will(returnValue(false));
-
+                never(service).registerUser(user);
             }
         });
-        databaseService.register(user);
+        databaseService.registerUser(user);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void tryToRegisterNullUser() throws Exception {
-
-        DatabaseService databaseService = new DatabaseService(service, validator);
-        User user = new User(null, "18");
+    @Test(expected = IllegalArgumentException.class)
+    public void tryToRegisterNullUserToDatabase() throws Exception {
+        final DatabaseService databaseService = new DatabaseService(validator, service);
+        final User user = new User(null, "18");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValid(user.age);
-                will(throwException(new NullPointerException()));
+                oneOf(validator).isValidAgeBetween10and100(user.age);
+                will(throwException(new IllegalArgumentException("Null user is try to register into database cannot register null user.")));
+                never(service).registerUser(user);
             }
         });
-        databaseService.register(user);
+        databaseService.registerUser(user);
     }
 
     @Test(expected = EmptyUserException.class)
     public void tryToRegisterUserWithEmptyFields() throws Exception {
-        DatabaseService databaseService = new DatabaseService(service, validator);
-        User user = new User("", "");
+        final DatabaseService databaseService = new DatabaseService(validator, service);
+        final User user = new User("", "");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValid(user.age);
-                will(throwException(new EmptyUserException("Empty user try to register,cannot register empty user.")));
+                oneOf(validator).isValidAgeBetween10and100(user.age);
+                will(throwException(new EmptyUserException("Try to register user with empty fields.")));
+                never(service).registerUser(user);
             }
         });
-        databaseService.register(user);
+        databaseService.registerUser(user);
     }
 }

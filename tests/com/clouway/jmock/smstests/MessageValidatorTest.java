@@ -25,20 +25,20 @@ public class MessageValidatorTest {
 
     @Test
     public void sendValidSMS() throws Exception {
-        final SMS sms = new SMS("0885390213", "do ivan", "zdravei ivan");
+        final SMS sms = new SMS("0885390213", "do ivan",randomMessageGenerator.generateMessage(12));
 
         assertTrue(messageValidator.isValid(sms));
     }
 
     @Test
     public void sendSmsWithEmptyRecipientField() throws Exception {
-        final SMS sms = new SMS("", "do ivan", "zdravei ivan");
+        final SMS sms = new SMS("", "do ivan", randomMessageGenerator.generateMessage(20));
         assertFalse(messageValidator.isValid(sms));
     }
 
     @Test
     public void sendSMSWithEmptyTitleField() throws Exception {
-        final SMS sms = new SMS("0885390213", "", randomMessageGenerator.generateMessage("abcdefghij", 20));
+        final SMS sms = new SMS("0885390213", "", randomMessageGenerator.generateMessage(20));
         assertFalse(messageValidator.isValid(sms));
     }
 
@@ -50,7 +50,7 @@ public class MessageValidatorTest {
 
     @Test
     public void sendSMSWithLegthMoreThanMaxLength() throws Exception {
-        final SMS sms = new SMS("0885390213", "do ivan", randomMessageGenerator.generateMessage("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 121));
+        final SMS sms = new SMS("0885390213", "do ivan", randomMessageGenerator.generateMessage(121));
         assertFalse(messageValidator.isValid(sms));
     }
 }

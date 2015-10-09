@@ -5,5 +5,5 @@ package com.clouway.test.jmock.service;
  */
 
 public interface Validator {
-   boolean isValid(String age);
+   boolean isValidAgeBetween10and100(String age);
 }

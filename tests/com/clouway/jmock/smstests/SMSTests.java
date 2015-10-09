@@ -2,60 +2,60 @@ package com.clouway.jmock.smstests;
 
 import com.clouway.test.jmock.sms.*;
 import org.jmock.Expectations;
-import org.jmock.auto.Mock;
+import org.jmock.auto.Mock;;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Ivaylo Penev(ipenev91@gmail.com)
+ * @author Ivaylo Penev(ipenev91@gmail.com) on 10/8/15.
  */
 public class SMSTests {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
+
     @Mock
     Gateway gateway;
+
     @Mock
     Validator validator;
 
-    @Test
-    public void sendSMS() {
 
-        SmsSendService sendService = new SmsSendService(gateway, validator);
+    @Test
+    public void sendValidMessage() throws Exception {
 
         RandomMessageGenerator randomMessageGenerator = new RandomMessageGenerator();
 
-        SMS sms = new SMS("0885342134", "do ivan", randomMessageGenerator.generateMessage("abc",10));
+        SmsSendService smsSendService = new SmsSendService(gateway,validator);
 
-        context.checking(new Expectations() {
+        SMS sms = new SMS("0883349583","do ivan",randomMessageGenerator.generateMessage(20));
+
+        context.checking(new Expectations(){
             {
-                oneOf(validator).isValid(sms);
+                oneOf(validator).isValidMessage(sms);
                 will(returnValue(true));
                 oneOf(gateway).sendSMS(sms);
             }
         });
-        sendService.sendSMS(sms);
+        smsSendService.sendSMS(sms);
     }
 
     @Test
-    public void sendInvalidSMS() throws Exception {
-
-        SmsSendService sendService = new SmsSendService(gateway, validator);
+    public void sendInvalidMessage() throws Exception {
 
         RandomMessageGenerator randomMessageGenerator = new RandomMessageGenerator();
 
-        SMS sms = new SMS(" ", "do ivan",randomMessageGenerator.generateMessage("abc",10) );
+        SmsSendService smsSendService = new SmsSendService(gateway,validator);
 
+        SMS sms = new SMS("","do ivan",randomMessageGenerator.generateMessage(20));
 
-
-        context.checking(new Expectations() {
+        context.checking(new Expectations(){
             {
-                oneOf(validator).isValid(sms);
+                oneOf(validator).isValidMessage(sms);
                 will(returnValue(false));
             }
         });
-        sendService.sendSMS(sms);
+        smsSendService.sendSMS(sms);
     }
-
 }

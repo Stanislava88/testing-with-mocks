@@ -8,8 +8,7 @@ public class SmsSendService {
     private Validator validator;
 
     /**
-     *
-     * @param gateway is a communication serice  which send message to recepient.
+     * @param gateway   is a communication service  which send message to recepient.
      * @param validator validate message before we send it.
      */
     public SmsSendService(Gateway gateway, Validator validator) {
@@ -18,11 +17,10 @@ public class SmsSendService {
     }
 
     /**
-     *
      * @param sms is message which we send.
      */
     public void sendSMS(SMS sms) {
-        if (validator.isValid(sms)) {
+        if (validator.isValidMessage(sms)) {
             gateway.sendSMS(sms);
         }
     }
