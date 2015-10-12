@@ -18,15 +18,17 @@ public class PeopleRegisterServiceTest {
 
     @Mock
     PersonDatabase personDatabase;
+
     @Mock
     AgeValidator ageValidator;
+
 
     @Test
     public void ageInBoundaries() {
         final Person person = new Person("John Smith", "30");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(ageValidator).isBetweenLowerAndHigherLimit(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(true));
             oneOf(personDatabase).addPersonToDataBase(person);
         }});
@@ -38,7 +40,7 @@ public class PeopleRegisterServiceTest {
         final Person person = new Person("Christiano Ronaldo Jr.", "9");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(ageValidator).isBetweenLowerAndHigherLimit(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
@@ -50,7 +52,7 @@ public class PeopleRegisterServiceTest {
         final Person person = new Person("Santa Claus", "2500");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(ageValidator).isBetweenLowerAndHigherLimit(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
@@ -62,7 +64,7 @@ public class PeopleRegisterServiceTest {
         final Person person = new Person("Lili Ivanova", "100");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(ageValidator).isBetweenLowerAndHigherLimit(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(true));
             oneOf(personDatabase).addPersonToDataBase(person);
         }});
@@ -74,7 +76,7 @@ public class PeopleRegisterServiceTest {
         final Person person = new Person("Stuart Little", "10");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(ageValidator).isBetweenLowerAndHigherLimit(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(true));
             oneOf(personDatabase).addPersonToDataBase(person);
         }});
@@ -87,7 +89,7 @@ public class PeopleRegisterServiceTest {
         final Person person = new Person("John Doe", "");
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(ageValidator).isBetweenLowerAndHigherLimit(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
@@ -99,7 +101,7 @@ public class PeopleRegisterServiceTest {
         final Person person = new Person("Uknown", null);
         final PeopleRegisterService peopleRegisterService = new PeopleRegisterService(ageValidator, personDatabase);
         mockery.checking(new Expectations() {{
-            oneOf(ageValidator).isBetweenLowerAndHigherLimit(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
             never(personDatabase).addPersonToDataBase(person);
         }});
@@ -113,7 +115,7 @@ public class PeopleRegisterServiceTest {
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(ageValidator).isOver18(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(true));
         }});
         peopleRegisterService.isAdult(person);
@@ -126,7 +128,7 @@ public class PeopleRegisterServiceTest {
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(ageValidator).isOver18(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(true));
         }});
         peopleRegisterService.isAdult(person);
@@ -139,7 +141,7 @@ public class PeopleRegisterServiceTest {
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(ageValidator).isOver18(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
         }});
         peopleRegisterService.isAdult(person);
@@ -152,7 +154,7 @@ public class PeopleRegisterServiceTest {
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(ageValidator).isOver18(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
 
         }});
@@ -167,7 +169,7 @@ public class PeopleRegisterServiceTest {
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(ageValidator).isOver18(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
         }});
         peopleRegisterService.isAdult(person);
@@ -180,7 +182,7 @@ public class PeopleRegisterServiceTest {
         mockery.checking(new Expectations() {{
             oneOf(personDatabase).getByName(person.name);
             will(returnValue(person));
-            oneOf(ageValidator).isOver18(person.age);
+            oneOf(ageValidator).isAdult(person.age);
             will(returnValue(false));
         }});
         peopleRegisterService.isAdult(person);
