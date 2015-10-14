@@ -1,4 +1,4 @@
-package com.clouway.Sms;
+package com.clouway.sms;
 
 
 import org.jmock.Expectations;

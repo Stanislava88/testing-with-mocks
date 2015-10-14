@@ -1,4 +1,4 @@
-package com.clouway.Service;
+package com.clouway.service;
 
 /**
  * Created by clouway on 15-9-30.

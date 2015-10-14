@@ -1,4 +1,4 @@
-package com.clouway.Sms;
+package com.clouway.sms;
 
 /**
  * Created by clouway on 15-9-25.

@@ -1,4 +1,4 @@
-package com.clouway.Service;
+package com.clouway.service;
 
 import org.junit.Test;
 
@@ -28,7 +28,4 @@ public class BoundaryAgeValidatorTest {
         final BoundaryAgeValidator bulgarianAgeValidator = new BoundaryAgeValidator(10,80);
         assertEquals(false,bulgarianAgeValidator.isAdult(person.age));
     }
-
-
-
 }

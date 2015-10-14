@@ -1,4 +1,4 @@
-package com.clouway.Service;
+package com.clouway.service;
 
 /**
  * Created by clouway on 15-10-12.
@@ -17,7 +17,7 @@ public class BoundaryAgeValidator implements AgeValidator {
     @Override
     public boolean isAdult(String age) {
         int ageInt= Integer.parseInt(age);
-        if(ageInt>lowerAge && ageInt<higherAge){
+        if(ageInt>=lowerAge && ageInt<=higherAge){
             return true;
         }else{
             return false;

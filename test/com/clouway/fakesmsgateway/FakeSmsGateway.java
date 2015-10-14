@@ -1,8 +1,8 @@
-package com.clouway.FakeSmsGateway;
+package com.clouway.fakesmsgateway;
 
-import com.clouway.Sms.Message;
-import com.clouway.Sms.Recipient;
-import com.clouway.Sms.SmsGateway;
+import com.clouway.sms.Message;
+import com.clouway.sms.Recipient;
+import com.clouway.sms.SmsGateway;
 
 /**
  * Created by clouway on 15-9-28.

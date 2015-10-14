@@ -1,9 +1,8 @@
-package com.clouway.FakeSmsGateway;
+package com.clouway.fakesmsgateway;
 
-import com.clouway.Sms.Message;
-import com.clouway.Sms.Recipient;
-import com.clouway.Sms.Sender;
-import org.junit.Assert;
+import com.clouway.sms.Message;
+import com.clouway.sms.Recipient;
+import com.clouway.sms.Sender;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
