@@ -13,19 +13,13 @@ import static junit.framework.Assert.assertTrue;
  * @author Ivaylo Penev(ipenev91@gmail.com)
  */
 public class MessageValidatorTest {
-    private MessageValidator messageValidator;
-    private RandomMessageGenerator randomMessageGenerator;
+    private MessageValidator messageValidator = new MessageValidator();
+    private RandomMessageGenerator randomMessageGenerator = new RandomMessageGenerator();
 
-    @Before
-    public void setUp() {
-
-        messageValidator = new MessageValidator();
-        randomMessageGenerator = new RandomMessageGenerator();
-    }
 
     @Test
     public void sendValidSMS() throws Exception {
-        final Message sms = new Message("0885390213", "do ivan",randomMessageGenerator.generateMessage(12));
+        final Message sms = new Message("0885390213", "do ivan", randomMessageGenerator.generateMessage(12));
 
         assertTrue(messageValidator.isValid(sms));
     }

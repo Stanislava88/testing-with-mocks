@@ -10,10 +10,10 @@ public class MessageValidator {
      */
 
     public boolean isValid(Message message) {
-        if (message.message.equals("") || message.title.equals("") || message.recipient.equals("")) {
+        if (message.body.equals("") || message.title.equals("") || message.recipient.equals("")) {
             return false;
         }
-        if (message.message.length() < 1 || message.message.length() > 120) {
+        if (message.body.length() < 1 || message.body.length() > 120) {
             return false;
         }
         return true;

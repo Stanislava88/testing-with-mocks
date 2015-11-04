@@ -5,19 +5,19 @@ package com.clouway.test.jmock.message;
  */
 public class Message {
 
-    public final String recipient;
-    public final String title;
-    public final String message;
+    public String recipient;
+    public String title;
+    public String body;
 
     /**
      * @param recipient is recepient which receive message.
      * @param title     is a message title.
-     * @param message   is message which we send.
+     * @param body      is message which we send.
      */
-    public Message(String recipient, String title, String message) {
+    public Message(String recipient, String title, String body) {
         this.recipient = recipient;
         this.title = title;
-        this.message = message;
+        this.body = body;
     }
 
 }
