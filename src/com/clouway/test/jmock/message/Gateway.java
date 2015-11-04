@@ -1,8 +1,8 @@
-package com.clouway.test.jmock.sms;
+package com.clouway.test.jmock.message;
 
 /**
  * @author Ivaylo Penev(ipenev91@gmail.com)
  */
 public interface Gateway {
-    void sendSMS(SMS sms);
+    void sendMessage(Message sms);
 }

@@ -1,9 +1,10 @@
-package com.clouway.test.jmock.sms;
+package com.clouway.test.jmock.message;
 
 /**
  * @author Ivaylo Penev(ipenev91@gmail.com)
  */
-public class SmsSendService {
+public class MessageService {
+
     private Gateway gateway;
     private Validator validator;
 
@@ -11,17 +12,17 @@ public class SmsSendService {
      * @param gateway   is a communication service  which send message to recepient.
      * @param validator validate message before we send it.
      */
-    public SmsSendService(Gateway gateway, Validator validator) {
+    public MessageService(Gateway gateway, Validator validator) {
         this.gateway = gateway;
         this.validator = validator;
     }
 
     /**
-     * @param sms is message which we send.
+     * @param message is message which we send.
      */
-    public void sendSMS(SMS sms) {
-        if (validator.isValidMessage(sms)) {
-            gateway.sendSMS(sms);
+    public void sendMessage(Message message) {
+        if (validator.isValidMessage(message)) {
+            gateway.sendMessage(message);
         }
     }
 

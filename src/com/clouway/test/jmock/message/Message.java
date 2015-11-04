@@ -1,9 +1,9 @@
-package com.clouway.test.jmock.sms;
+package com.clouway.test.jmock.message;
 
 /**
  * @author Ivaylo Penev(ipenev91@gmail.com)
  */
-public class SMS {
+public class Message {
 
     public final String recipient;
     public final String title;
@@ -14,7 +14,7 @@ public class SMS {
      * @param title     is a message title.
      * @param message   is message which we send.
      */
-    public SMS(String recipient, String title, String message) {
+    public Message(String recipient, String title, String message) {
         this.recipient = recipient;
         this.title = title;
         this.message = message;

@@ -24,7 +24,7 @@ public class DatabaseService {
      */
 
     public void registerUser(User user) {
-        if (validator.isValidAgeBetween10and100(user.age)) {
+        if (validator.isValid(user.age)) {
             service.registerUser(user);
         }
     }

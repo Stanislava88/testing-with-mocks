@@ -17,18 +17,19 @@ public class ServiceTest {
     @Mock
     Service service;
 
-    @Mock
-    Validator validator;
+    /*@Mock
+    Validator validator;*/
 
     @Test
     public void tryToRegisterValidUser() throws Exception {
 
+        final BoundaryValidator validator = new BoundaryValidator(10,100);
         final DatabaseService databaseService = new DatabaseService(validator,service);
         final User user = new User("Ivan", "12");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValidAgeBetween10and100(user.age);
+                oneOf(validator).isValid(user.age);
                 will(returnValue(true));
                 oneOf(service).registerUser(user);
             }
@@ -38,12 +39,13 @@ public class ServiceTest {
 
     @Test
     public void tryToRegisterNoAdultUser() throws Exception {
+        final BoundaryValidator validator = new BoundaryValidator(10,100);
         final DatabaseService databaseService = new DatabaseService(validator, service);
         final User user = new User("Ivan", "9");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValidAgeBetween10and100(user.age);
+                oneOf(validator).isValid(user.age);
                 will(returnValue(false));
                 never(service).registerUser(user);
             }
@@ -54,12 +56,13 @@ public class ServiceTest {
     @Test
     public void tryToRegisterUserWithAgeOverThanAllowed() throws Exception {
 
+        final BoundaryValidator validator = new BoundaryValidator(10,100);
         final DatabaseService databaseService = new DatabaseService(validator, service);
         final User user = new User("Bai Georgi", "102");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValidAgeBetween10and100(user.age);
+                oneOf(validator).isValid(user.age);
                 will(returnValue(false));
                 never(service).registerUser(user);
             }
@@ -69,12 +72,14 @@ public class ServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void tryToRegisterNullUserToDatabase() throws Exception {
+
+        final BoundaryValidator validator = new BoundaryValidator(10,100);
         final DatabaseService databaseService = new DatabaseService(validator, service);
         final User user = new User(null, "18");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValidAgeBetween10and100(user.age);
+                oneOf(validator).isValid(user.age);
                 will(throwException(new IllegalArgumentException("Null user is try to register into database cannot register null user.")));
                 never(service).registerUser(user);
             }
@@ -84,12 +89,14 @@ public class ServiceTest {
 
     @Test(expected = EmptyUserException.class)
     public void tryToRegisterUserWithEmptyFields() throws Exception {
+
+        final BoundaryValidator validator = new BoundaryValidator(10,100);
         final DatabaseService databaseService = new DatabaseService(validator, service);
         final User user = new User("", "");
 
         context.checking(new Expectations() {
             {
-                oneOf(validator).isValidAgeBetween10and100(user.age);
+                oneOf(validator).isValid(user.age);
                 will(throwException(new EmptyUserException("Try to register user with empty fields.")));
                 never(service).registerUser(user);
             }

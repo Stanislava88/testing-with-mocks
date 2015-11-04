@@ -1,8 +1,8 @@
 package com.clouway.jmock.smstests;
 
-import com.clouway.test.jmock.sms.RandomMessageGenerator;
-import com.clouway.test.jmock.sms.SMS;
-import com.clouway.test.jmock.sms.MessageValidator;
+import com.clouway.test.jmock.message.RandomMessageGenerator;
+import com.clouway.test.jmock.message.Message;
+import com.clouway.test.jmock.message.MessageValidator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,32 +25,32 @@ public class MessageValidatorTest {
 
     @Test
     public void sendValidSMS() throws Exception {
-        final SMS sms = new SMS("0885390213", "do ivan",randomMessageGenerator.generateMessage(12));
+        final Message sms = new Message("0885390213", "do ivan",randomMessageGenerator.generateMessage(12));
 
         assertTrue(messageValidator.isValid(sms));
     }
 
     @Test
     public void sendSmsWithEmptyRecipientField() throws Exception {
-        final SMS sms = new SMS("", "do ivan", randomMessageGenerator.generateMessage(20));
+        final Message sms = new Message("", "do ivan", randomMessageGenerator.generateMessage(20));
         assertFalse(messageValidator.isValid(sms));
     }
 
     @Test
     public void sendSMSWithEmptyTitleField() throws Exception {
-        final SMS sms = new SMS("0885390213", "", randomMessageGenerator.generateMessage(20));
+        final Message sms = new Message("0885390213", "", randomMessageGenerator.generateMessage(20));
         assertFalse(messageValidator.isValid(sms));
     }
 
     @Test
     public void sendSMSWithEmptyMessageField() throws Exception {
-        final SMS sms = new SMS("0885390213", "do ivan", "");
+        final Message sms = new Message("0885390213", "do ivan", "");
         assertFalse(messageValidator.isValid(sms));
     }
 
     @Test
     public void sendSMSWithLegthMoreThanMaxLength() throws Exception {
-        final SMS sms = new SMS("0885390213", "do ivan", randomMessageGenerator.generateMessage(121));
+        final Message sms = new Message("0885390213", "do ivan", randomMessageGenerator.generateMessage(121));
         assertFalse(messageValidator.isValid(sms));
     }
 }

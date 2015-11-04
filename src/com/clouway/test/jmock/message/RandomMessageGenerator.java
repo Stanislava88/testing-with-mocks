@@ -1,4 +1,4 @@
-package com.clouway.test.jmock.sms;
+package com.clouway.test.jmock.message;
 
 import java.util.Random;
 
