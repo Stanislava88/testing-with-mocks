@@ -32,7 +32,7 @@ public class FakeCacheTest {
 
         context.checking(new Expectations(){
             {
-                oneOf(userRepository).getUserById(user,user.id);
+                oneOf(userRepository).getUserById(user.id);
                 will(returnValue(null));
                 oneOf(userRepository).register(user);
             }
