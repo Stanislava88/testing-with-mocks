@@ -9,11 +9,12 @@ public class BoundaryValidator implements Validator {
     private int higher;
 
     public BoundaryValidator(int lower, int higher) {
-          this.lower = lower;
-          this.higher= higher;
+        this.lower = lower;
+        this.higher = higher;
     }
-    public boolean isValid(String age){
-        if(Integer.parseInt(age)<lower || Integer.parseInt(age) > higher){
+
+    public boolean isValid(String age) {
+        if (Integer.parseInt(age) < lower || Integer.parseInt(age) > higher) {
             return false;
         }
         return true;

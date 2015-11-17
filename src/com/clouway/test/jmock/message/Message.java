@@ -19,6 +19,5 @@ public class Message {
         this.title = title;
         this.body = body;
     }
-
 }
 

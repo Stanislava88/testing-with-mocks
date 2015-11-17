@@ -2,10 +2,16 @@ package com.clouway.jmock.smstests;
 
 import com.clouway.test.jmock.message.*;
 import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.jmock.auto.Mock;;
+import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Ivaylo Penev(ipenev91@gmail.com) on 10/8/15.
@@ -39,7 +45,10 @@ public class MessageServiceTests {
             }
         });
         smsSendService.sendMessage(message);
+
+        assertTrue(validator.isValidMessage(message));
     }
+
 
     @Test
     public void sendInvalidMessage() throws Exception {
@@ -56,6 +65,9 @@ public class MessageServiceTests {
                 will(returnValue(false));
             }
         });
+
         smsSendService.sendMessage(message);
+
+        assertFalse(validator.isValidMessage(message));
     }
 }

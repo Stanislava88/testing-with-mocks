@@ -1,17 +1,12 @@
 package com.clouway.test.jmock.service;
 
 /**
- * @author Ivaylo Penev(ipenev91@gmail.com)
+ * Created by clouway on 11/9/15.
  */
-
 public class User {
-    public final String name;
-    public final String age;
+   public String name;
+   public String age;
 
-    /**
-     * @param name is a name of User
-     * @param age  is age of User
-     */
     public User(String name, String age) {
         this.name = name;
         this.age = age;
