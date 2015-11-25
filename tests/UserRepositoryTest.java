@@ -25,7 +25,7 @@ public class UserRepositoryTest {
         User user = new User("dsds");
 
 
-        InMemoryFakeCache cache = new InMemoryFakeCache();
+        InMemoryCache cache = new InMemoryCache();
 
         context.checking(new Expectations() {
             {

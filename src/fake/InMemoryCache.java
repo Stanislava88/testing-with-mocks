@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by clouway on 11/17/15.
  */
-public class InMemoryFakeCache implements Cache {
+public class InMemoryCache implements Cache {
 
     private Map<String, User> cache = new HashMap<>();
 
