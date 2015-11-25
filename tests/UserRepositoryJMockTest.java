@@ -22,10 +22,9 @@ public class UserRepositoryJMockTest {
     @Mock
     DataStore dataStore;
 
-    @Mock
-    Cache cache;
+   /* @Mock
+    Cache cache;*/
 
-    private UserRepository userRepository = new UserRepository(dataStore, cache);
 
     @Test
     public void registerUserDoNotExist() {
@@ -40,10 +39,12 @@ public class UserRepositoryJMockTest {
 
                 oneOf(dataStore).register(user);
 
-                oneOf(cache).put(with(any(String.class)), with(any(User.class)));
+              /*  oneOf(cache).put(with(any(String.class)), with(any(User.class)));*/
 
             }
         });
+
+        UserRepository userRepository = new UserRepository(dataStore);
         userRepository.registerUserIfNotExist(user);
     }
 
@@ -55,6 +56,7 @@ public class UserRepositoryJMockTest {
 
         context.checking(new Expectations() {
             {
+                UserRepository userRepository = new UserRepository(dataStore);
                 oneOf(userRepository).registerExistingUser(user);
                 will(returnValue(null));
             }

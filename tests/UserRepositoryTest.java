@@ -32,12 +32,10 @@ public class UserRepositoryTest {
                 oneOf(dataStore).getUserById(user.id);
                 will(returnValue(null));
                 oneOf(dataStore).register(user);
-
             }
         });
-        UserRepository dataStore = new UserRepository(this.dataStore,cache);
+        UserRepository dataStore = new UserRepository(this.dataStore);
         dataStore.registerUserIfNotExist(user);
         cache.assertCacheContains(user.id);
     }
-
 }
