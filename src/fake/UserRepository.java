@@ -6,29 +6,31 @@ package fake;
 public class UserRepository {
 
     private DataStore dataStore;
-   /* private Cache cache;*/
+    private Cache cache;
 
-    public UserRepository(DataStore dataStore) {
+    private User existingUser;
+
+    public UserRepository(DataStore dataStore, Cache cache) {
         this.dataStore = dataStore;
-        /*this.cache = cache;*/
+        this.cache = cache;
     }
 
     public void registerUserIfNotExist(User user) {
 
-  /*      User existingUser = cache.get(user.id);*/
+         existingUser = cache.get(user.id);
 
-        User existingUser = dataStore.getUserById(user.id);
+         existingUser = dataStore.getUserById(user.id);
 
         if (existingUser == null) {
 
             dataStore.register(user);
         }
-            /*cache.put(user.id, user);*/
+            cache.put(user.id, user);
     }
 
     public void registerExistingUser(User user) {
 
-        /*User existingUser = cache.get(user.id);*/
+         existingUser = cache.get(user.id);
 
         if (user != null) {
 

@@ -25,19 +25,19 @@ public class UserRepositoryTest {
         User user = new User("dsds");
 
 
-        InMemoryFakeCache fakeCache = new InMemoryFakeCache();
+        InMemoryFakeCache cache = new InMemoryFakeCache();
 
         context.checking(new Expectations() {
             {
                 oneOf(dataStore).getUserById(user.id);
                 will(returnValue(null));
                 oneOf(dataStore).register(user);
-                
+
             }
         });
-        UserRepository dataStore = new UserRepository(this.dataStore);
+        UserRepository dataStore = new UserRepository(this.dataStore,cache);
         dataStore.registerUserIfNotExist(user);
-        fakeCache.assertCacheContains(user.id);
+        cache.assertCacheContains(user.id);
     }
 
 }
