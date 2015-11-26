@@ -34,7 +34,7 @@ public class UserRepositoryTest {
                 oneOf(dataStore).register(user);
             }
         });
-        UserRepository dataStore = new UserRepository(this.dataStore);
+        UserRepository dataStore = new UserRepository(this.dataStore,cache);
         dataStore.registerUserIfNotExist(user);
         cache.assertCacheContains(user.id);
     }
