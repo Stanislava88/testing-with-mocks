@@ -8,7 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jmock-2.6" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
@@ -109,5 +108,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jmock-2.6" level="project" />
   </component>
 </module>

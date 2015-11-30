@@ -31,10 +31,10 @@ public class ServiceTest {
             {
                 oneOf(boundaryValidator).isValid(user.age);
                 will(returnValue(true));
-                oneOf(service).registerUser(user);
+                oneOf(service).register(user);
             }
         });
-        databaseService.registerUser(user);
+        databaseService.register(user);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ServiceTest {
                 never(service).registerUser(user);
             }
         });
-        databaseService.registerUser(user);
+        databaseService.register(user);
     }
 
     @Test
@@ -65,10 +65,10 @@ public class ServiceTest {
             {
                 oneOf(boundaryValidator).isValid(user.age);
                 will(returnValue(false));
-                never(service).registerUser(user);
+                never(service).register(user);
             }
         });
-        databaseService.registerUser(user);
+        databaseService.register(user);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -82,10 +82,10 @@ public class ServiceTest {
             {
                 oneOf(boundaryValidator).isValid(user.age);
                 will(throwException(new IllegalArgumentException("Null user is try to register into database cannot register null user.")));
-                never(service).registerUser(user);
+                never(service).register(user);
             }
         });
-        databaseService.registerUser(user);
+        databaseService.register(user);
     }
 
     @Test(expected = EmptyUserException.class)
@@ -99,9 +99,9 @@ public class ServiceTest {
             {
                 oneOf(boundaryValidator).isValid(user.age);
                 will(throwException(new EmptyUserException("Try to register user with empty fields.")));
-                never(service).registerUser(user);
+                never(service).register(user);
             }
         });
-        databaseService.registerUser(user);
+        databaseService.register(user);
     }
 }

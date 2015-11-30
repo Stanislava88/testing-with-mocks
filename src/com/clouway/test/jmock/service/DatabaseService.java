@@ -23,7 +23,7 @@ public class DatabaseService {
      * @param user is user which will be register in System.
      */
 
-    public void registerUser(User user) {
+    public void register(User user) {
         if (validator.isValid(user.age)) {
             service.registerUser(user);
         }

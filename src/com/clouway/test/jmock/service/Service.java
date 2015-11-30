@@ -5,5 +5,5 @@ package com.clouway.test.jmock.service;
  */
 public interface Service {
 
-    void registerUser(User user);
+    void register(User user);
 }
