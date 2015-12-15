@@ -9,14 +9,23 @@ public class Recipient {
 
     public Recipient(String name, String number) {
         this.name = name;
-        this.number = number;
+        if (numberOnlyDigits(number)) {
+            this.number = number;
+        } else {
+            throw new IllegalArgumentException("The number is not valid");
+        }
+
     }
 
-    public int numberLength() {
-        return number.length();
+    public String name() {
+        return name;
     }
 
-    public boolean numberOnlyDigits() {
+    private boolean numberOnlyDigits(String number) {
         return number.matches("[0-9]+");
+    }
+
+    public String number() {
+        return number;
     }
 }

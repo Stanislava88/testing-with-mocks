@@ -13,32 +13,20 @@ public class SMSValidator implements Validator {
     }
 
     @Override
-    public boolean validate(Recipient recipient, String title, String message) throws InvalidSMSException {
-        return validateNumber(recipient) && validateTitle(title) && validateMessage(message);
+    public boolean validate(String number, String title, String message) {
+        return validateTitle(title) && validateMessage(message) && validateNumber(number);
     }
 
-    private boolean validateMessage(String message) throws InvalidSMSException {
-        if (messageRange.isBetweenRange(message.length())) {
-            return true;
-        } else {
-            throw new InvalidSMSException("Invalid message length");
-        }
+    private boolean validateMessage(String message) {
+        return messageRange.isBetweenRange(message.length());
     }
 
-    private boolean validateTitle(String title) throws InvalidSMSException {
-        if (title.length() > 0) {
-            return true;
-        } else {
-            throw new InvalidSMSException("Invalid title");
-        }
+    private boolean validateTitle(String title) {
+        return title.length() > 0;
     }
 
-    private boolean validateNumber(Recipient recipient) throws InvalidSMSException {
-        if (recipient.numberLength() == numberLength && recipient.numberOnlyDigits()) {
-            return true;
-        } else {
-            throw new InvalidSMSException("Invalid recipient number");
-        }
+    private boolean validateNumber(String number) {
+        return number.length() == numberLength;
     }
 
 

@@ -20,8 +20,8 @@ public class SMSValidatorTest {
     @Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"", "title", "message"}, {"123456789s", "title2", "message2"}, {"0000000000", "", "message3"},
-                {"0899232323", "title4", ""},{"0878787878", "t5", "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" +
+                {"0", "gfre", "message3"},{"0000000000", "", "message3"},
+                {"0899232323", "title4", ""}, {"0878787878", "t5", "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" +
                 "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"}
         });
     }
@@ -38,18 +38,25 @@ public class SMSValidatorTest {
     }
 
     @Test
-    public void realSMSIsValid() throws InvalidSMSException {
+    public void realSMSIsValid() {
         SMSValidator validator = new SMSValidator(10, new MessageRange(1, 120));
         Recipient recipient = new Recipient("tony", "0888888888");
-        boolean valid = validator.validate(recipient, "title", "message");
-        assertThat(true, is(equalTo(valid)));
+        boolean valid = validator.validate(recipient.number(), "title", "message");
+        assertThat(valid, is(equalTo(true)));
     }
 
-    @Test(expected = InvalidSMSException.class)
-    public void throwsException() throws InvalidSMSException {
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidNumberThrowsException() {
+        SMSValidator validator = new SMSValidator(10, new MessageRange(1, 120));
+        Recipient recipient = new Recipient("mark", "");
+        validator.validate(recipient.number(), "re", "twe");
+    }
+
+    @Test
+    public void returnsFalse() {
         SMSValidator validator = new SMSValidator(10, new MessageRange(1, 120));
         Recipient recipient = new Recipient("mark", number);
-        validator.validate(recipient, title, message);
+        assertThat(validator.validate(recipient.number(), title, message), is(equalTo(false)));
     }
 
 

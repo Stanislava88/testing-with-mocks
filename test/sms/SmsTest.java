@@ -1,15 +1,12 @@
 package sms;
 
+import org.jmock.Expectations;
+import org.jmock.Sequence;
+import org.jmock.auto.Auto;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.jmock.Expectations;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * @author Krasimir Raikov(raikov.krasimir@gmail.com)
@@ -21,42 +18,45 @@ public class SmsTest {
     SMSDelivery sender;
     @Mock
     Validator validator;
+    @Auto
+    Sequence smsInvocations;
 
     @Test
-    public void successfullySendSMS() throws InvalidSMSException {
+    public void successfullySendSMS() {
 
-        SMS sms = new SMS(sender, validator);
+
         Recipient recipient = new Recipient("John", "0878125246");
         String title = "we have to meet";
         String message = "you forgot your wallet the other day";
+        SMSMessage sms = new SMSMessage(recipient, title, message);
 
         context.checking(new Expectations() {{
-            oneOf(validator).validate(recipient, title, message);
+            oneOf(validator).validate(recipient.number(), title, message);
             will(returnValue(true));
-            oneOf(sender).send(recipient, title, message);
-            oneOf(sender).received();
+            inSequence(smsInvocations);
+            oneOf(sender).send(recipient.number(), title, message);
             will(returnValue(true));
+            inSequence(smsInvocations);
         }});
 
-        sms.send(recipient, title, message);
-        assertThat(sms.received(), is(equalTo(true)));
+        sms.send(validator, sender);
     }
 
-    @Test
-    public void InvalidSMSThrowsException() throws InvalidSMSException {
-        SMS sms = new SMS(sender, validator);
-        Recipient recipient = new Recipient("Bill", "");
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidNumberNeverSend() {
+        Recipient recipient = new Recipient("Bill", "1234567890");
         String title = "title";
         String message = "message";
+        SMSMessage sms = new SMSMessage(recipient, title, message);
+
         context.checking(new Expectations() {{
-            oneOf(validator).validate(recipient, title, message);
-            will(throwException(new InvalidSMSException("Invalid recipient number")));
+            oneOf(validator).validate(recipient.number(), title, message);
+            will(returnValue(false));
+            never(sender).send(recipient.number(), title, message);
         }});
-        try {
-            sms.send(recipient, title, message);
-        } catch (InvalidSMSException ex) {
-            assertThat("Invalid recipient number", is(equalTo(ex.getMessage())));
-        }
+
+        sms.send(validator, sender);
+
     }
 
 }
