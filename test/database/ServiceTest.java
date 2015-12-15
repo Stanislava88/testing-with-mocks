@@ -3,7 +3,6 @@ package database;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -19,7 +18,8 @@ public class ServiceTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
 
-    @Mock AgeValidator validator;
+    @Mock
+    AgeValidator validator;
     @Mock
     PeopleDatabase personDatabase;
 
@@ -27,27 +27,22 @@ public class ServiceTest {
     @Test
     public void successfullyAddPersonToDatabase() {
 
-        Person john = new Person("John", "42");
+        final Person john = new Person("John", "42");
 
         context.checking(new Expectations() {{
-
-            oneOf(validator).acceptable(john.age());
-            will(returnValue(true));
-            oneOf(personDatabase).add(john);
+            oneOf(personDatabase).add(validator, john);
             will(returnValue(true));
         }});
-        assertThat(john.addToDatabase(validator,personDatabase), is(equalTo(true)));
+        assertThat(john.addToDatabase(validator, personDatabase), is(equalTo(true)));
     }
 
 
     @Test
     public void tryToAddTooOldPersonToDatabase() {
-        Person bob = new Person("Bob", "101");
+        final Person bob = new Person("Bob", "101");
 
         context.checking(new Expectations() {{
-            oneOf(validator).acceptable(bob.age());
-            will(returnValue(false));
-            never(personDatabase).add(bob);
+            oneOf(personDatabase).add(validator, bob);
         }});
 
         assertThat(bob.addToDatabase(validator, personDatabase), is(equalTo(false)));
@@ -55,16 +50,13 @@ public class ServiceTest {
 
     @Test
     public void tryToAddTooYoungPersonToDatabase() {
-        Person billy = new Person("Billy", "8");
+        final Person billy = new Person("Billy", "8");
 
         context.checking(new Expectations() {{
-            oneOf(validator).acceptable(billy.age());
-            will(returnValue(false));
-            never(personDatabase).add(billy);
+            oneOf(personDatabase).add(validator, billy);
         }});
         assertThat(billy.addToDatabase(validator, personDatabase), is(equalTo(false)));
     }
-
 
 
 }

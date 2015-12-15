@@ -25,9 +25,9 @@ public class SmsTest {
     public void successfullySendSMS() {
 
 
-        Recipient recipient = new Recipient("John", "0878125246");
-        String title = "we have to meet";
-        String message = "you forgot your wallet the other day";
+        final Recipient recipient = new Recipient("John", "0878125246");
+        final String title = "we have to meet";
+        final String message = "you forgot your wallet the other day";
         SMSMessage sms = new SMSMessage(recipient, title, message);
 
         context.checking(new Expectations() {{
@@ -44,9 +44,9 @@ public class SmsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidTitleNeverSend() {
-        Recipient recipient = new Recipient("Bill", "1234567890");
-        String title = "";
-        String message = "message";
+        final Recipient recipient = new Recipient("Bill", "1234567890");
+        final String title = "";
+        final String message = "message";
         SMSMessage sms = new SMSMessage(recipient, title, message);
 
         context.checking(new Expectations() {{
