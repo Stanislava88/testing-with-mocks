@@ -12,7 +12,7 @@ public class MessageRange {
         this.max = max;
     }
 
-    boolean isBetweenRange(int number) {
+    public boolean isBetweenRange(int number) {
         return min <= number && number <= max;
     }
 }
