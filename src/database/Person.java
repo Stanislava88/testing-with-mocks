@@ -14,7 +14,11 @@ public class Person {
 
 
 
-    public boolean addToDatabase(PeopleDatabase personDatabase) {
-        return personDatabase.add(this);
+    public boolean addToDatabase(AgeValidator validator,PeopleDatabase personDatabase) {
+        return validator.acceptable(age) && personDatabase.add(this);
+    }
+
+    public String age() {
+        return age;
     }
 }

@@ -15,18 +15,14 @@ import static org.hamcrest.core.IsEqual.equalTo;
  * @author Krasimir Raikov(raikov.krasimir@gmail.com)
  */
 public class ServiceTest {
-    Service service = null;
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
 
+    @Mock AgeValidator validator;
     @Mock
     PeopleDatabase personDatabase;
 
-    @Before
-    public void setUp() {
-        service = new Service(personDatabase);
-    }
 
     @Test
     public void successfullyAddPersonToDatabase() {
@@ -35,36 +31,26 @@ public class ServiceTest {
 
         context.checking(new Expectations() {{
 
-            oneOf(personDatabase).acceptable(john);
+            oneOf(validator).acceptable(john.age());
             will(returnValue(true));
             oneOf(personDatabase).add(john);
             will(returnValue(true));
         }});
-        assertThat(service.addToDatabase(john), is(equalTo(true)));
+        assertThat(john.addToDatabase(validator,personDatabase), is(equalTo(true)));
     }
 
-    @Test
-    public void successfullyCheckThatPersonIsCapableOfVoting() {
-
-        context.checking(new Expectations() {{
-            oneOf(personDatabase).capableOfVoting("john");
-            will(returnValue(true));
-        }});
-
-        assertThat(service.capableOfVoting("john"), is(equalTo(true)));
-    }
 
     @Test
     public void tryToAddTooOldPersonToDatabase() {
         Person bob = new Person("Bob", "101");
 
         context.checking(new Expectations() {{
-            oneOf(personDatabase).acceptable(bob);
+            oneOf(validator).acceptable(bob.age());
             will(returnValue(false));
             never(personDatabase).add(bob);
         }});
 
-        assertThat(service.addToDatabase(bob), is(equalTo(false)));
+        assertThat(bob.addToDatabase(validator, personDatabase), is(equalTo(false)));
     }
 
     @Test
@@ -72,22 +58,13 @@ public class ServiceTest {
         Person billy = new Person("Billy", "8");
 
         context.checking(new Expectations() {{
-            oneOf(personDatabase).acceptable(billy);
+            oneOf(validator).acceptable(billy.age());
             will(returnValue(false));
             never(personDatabase).add(billy);
         }});
-        assertThat(service.addToDatabase(billy), is(equalTo(false)));
+        assertThat(billy.addToDatabase(validator, personDatabase), is(equalTo(false)));
     }
 
 
-    @Test
-    public void successfullyCheckThatPersonIsTooYoungtoVote() {
-        context.checking(new Expectations() {{
-            oneOf(personDatabase).capableOfVoting("Billy");
-            will(returnValue(false));
-
-        }});
-        assertThat(service.capableOfVoting("Billy"), is(equalTo(false)));
-    }
 
 }
