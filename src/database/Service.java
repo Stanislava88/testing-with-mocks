@@ -14,7 +14,7 @@ public class Service {
 
 
     public boolean addToDatabase(Person person) {
-        return validator.validateForAdding(person.age()) && person.addToDatabase(validator, peopleDatabase);
+        return validator.validateForAdding(person.age()) && person.addToDatabase(peopleDatabase);
     }
 
     public boolean capableOfVoting(String name) {

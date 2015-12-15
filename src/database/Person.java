@@ -17,7 +17,7 @@ public class Person {
         return age;
     }
 
-    public boolean addToDatabase(AgeValidator validator, PeopleDatabase personDatabase) {
+    public boolean addToDatabase(PeopleDatabase personDatabase) {
         return personDatabase.add(this);
     }
 }
