@@ -13,9 +13,6 @@ public class Person {
     }
 
 
-    public String age() {
-        return age;
-    }
 
     public boolean addToDatabase(PeopleDatabase personDatabase) {
         return personDatabase.add(this);

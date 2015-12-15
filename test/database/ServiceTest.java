@@ -19,14 +19,13 @@ public class ServiceTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
-    @Mock
-    AgeValidator validator;
+
     @Mock
     PeopleDatabase personDatabase;
 
     @Before
     public void setUp() {
-        service = new Service(validator, personDatabase);
+        service = new Service(personDatabase);
     }
 
     @Test
@@ -36,7 +35,7 @@ public class ServiceTest {
 
         context.checking(new Expectations() {{
 
-            oneOf(validator).validateForAdding(john.age());
+            oneOf(personDatabase).acceptable(john);
             will(returnValue(true));
             oneOf(personDatabase).add(john);
             will(returnValue(true));
@@ -48,9 +47,7 @@ public class ServiceTest {
     public void successfullyCheckThatPersonIsCapableOfVoting() {
 
         context.checking(new Expectations() {{
-            oneOf(personDatabase).getAge("john");
-            will(returnValue("43"));
-            oneOf(validator).validateForVoting("43");
+            oneOf(personDatabase).capableOfVoting("john");
             will(returnValue(true));
         }});
 
@@ -62,7 +59,7 @@ public class ServiceTest {
         Person bob = new Person("Bob", "101");
 
         context.checking(new Expectations() {{
-            oneOf(validator).validateForAdding("101");
+            oneOf(personDatabase).acceptable(bob);
             will(returnValue(false));
             never(personDatabase).add(bob);
         }});
@@ -75,7 +72,7 @@ public class ServiceTest {
         Person billy = new Person("Billy", "8");
 
         context.checking(new Expectations() {{
-            oneOf(validator).validateForAdding("8");
+            oneOf(personDatabase).acceptable(billy);
             will(returnValue(false));
             never(personDatabase).add(billy);
         }});
@@ -86,10 +83,9 @@ public class ServiceTest {
     @Test
     public void successfullyCheckThatPersonIsTooYoungtoVote() {
         context.checking(new Expectations() {{
-            oneOf(personDatabase).getAge("Billy");
-            will(returnValue("9"));
-            oneOf(validator).validateForVoting("9");
+            oneOf(personDatabase).capableOfVoting("Billy");
             will(returnValue(false));
+
         }});
         assertThat(service.capableOfVoting("Billy"), is(equalTo(false)));
     }
