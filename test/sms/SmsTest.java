@@ -43,9 +43,9 @@ public class SmsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidNumberNeverSend() {
+    public void invalidTitleNeverSend() {
         Recipient recipient = new Recipient("Bill", "1234567890");
-        String title = "title";
+        String title = "";
         String message = "message";
         SMSMessage sms = new SMSMessage(recipient, title, message);
 
