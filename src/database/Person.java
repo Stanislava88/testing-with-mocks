@@ -10,14 +10,15 @@ public class Person {
     public Person(String name, String age) {
         this.name = name;
         this.age = age;
+
     }
 
-
-    public boolean addToDatabase(AgeValidator validator, PeopleDatabase personDatabase) {
-        return personDatabase.add(validator, this);
-    }
 
     public String age() {
         return age;
+    }
+
+    public String name() {
+        return name;
     }
 }

@@ -6,4 +6,6 @@ package database;
 public interface AgeValidator {
 
     boolean acceptable(String age);
+
+    boolean capableOfVoting(String age);
 }
