@@ -9,7 +9,6 @@ public class Message {
     public final String content;
 
     public Message(String recipient, String title, String content) {
-
         this.recipient = recipient;
         this.title = title;
         this.content = content;

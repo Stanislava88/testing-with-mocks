@@ -11,10 +11,11 @@ import org.junit.Test;
 public class MessageDispatcherTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
+
     private MessageGateway gateway = context.mock(MessageGateway.class);
     private Validator validator = context.mock(Validator.class);
 
-    MessageDispatcher dispatcher = new MessageDispatcher(gateway, validator);
+    private MessageDispatcher dispatcher = new MessageDispatcher(gateway, validator);
 
     @Test
     public void happyPath() throws Exception {

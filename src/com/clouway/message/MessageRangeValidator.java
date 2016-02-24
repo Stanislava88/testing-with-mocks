@@ -8,7 +8,6 @@ public class MessageRangeValidator implements Validator {
     private final int maxValue;
 
     public MessageRangeValidator(int minValue, int maxValue) {
-
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
