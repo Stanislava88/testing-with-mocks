@@ -8,12 +8,14 @@ public class UserService {
     private final Validator validator;
 
     public UserService(Database database, Validator validator) {
-
         this.database = database;
         this.validator = validator;
     }
 
     public void register(User user) {
-
+        if (validator.isValid(user.age)) {
+            database.save(user);
+        }
+        return;
     }
 }

@@ -8,8 +8,8 @@ package com.clouway.service;
 public interface Validator {
     /**
      * Will return true if age is range from 10 to 100 and false otherwise
-     * @param age
-     * @return
+     * @param age Inspected object
+     * @return true or false of validation
      */
     boolean isValid(String age);
 }

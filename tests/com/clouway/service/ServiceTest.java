@@ -29,4 +29,18 @@ public class ServiceTest {
         }});
         service.register(user);
     }
+
+    @Test
+    public void noRegisterInvalidUser() throws Exception {
+        final User user = new User("Ivan", "120");
+
+        context.checking(new Expectations() {{
+            oneOf(validator).isValid(user.age);
+            will(returnValue(false));
+
+            never(database).save(user);
+        }});
+        service.register(user);
+    }
 }
+
