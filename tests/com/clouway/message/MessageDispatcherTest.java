@@ -32,7 +32,7 @@ public class MessageDispatcherTest {
     }
 
     @Test
-    public void sendMessageWithoutTitle() throws Exception {
+    public void notSendMessageWithoutTitle() throws Exception {
         final Message message = new Message("recipient", "", "content");
 
         context.checking(new Expectations() {{
