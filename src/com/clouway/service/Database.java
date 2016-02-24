@@ -5,4 +5,6 @@ package com.clouway.service;
  */
 public interface Database {
     void save(User user);
+
+    void findUser(User age);
 }

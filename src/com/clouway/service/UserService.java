@@ -16,6 +16,13 @@ public class UserService {
         if (validator.isValid(user.age)) {
             database.save(user);
         }
-        return;
+    }
+
+    public boolean find(String age, User user) {
+        if (Integer.parseInt(user.age) > Integer.parseInt(age)) {
+            database.findUser(user);
+            return true;
+        }
+        return false;
     }
 }
