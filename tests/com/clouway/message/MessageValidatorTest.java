@@ -1,10 +1,9 @@
 package com.clouway.message;
 
+import com.google.common.base.Strings;
 import org.junit.Test;
 
-import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 /**
@@ -25,67 +24,68 @@ public class MessageValidatorTest {
         assertThat(result, is(true));
     }
 
-    @Test(expected = InvalidMessageException.class)
+    @Test
     public void detectIsMessageWithoutRecipient() throws Exception {
         String recipient = "";
         String title = "title";
         String content = "content";
         Message message = new Message(recipient, title, content);
 
-        validator.isValid(message);
+        boolean result = validator.isValid(message);
+        assertThat(result, is(false));
     }
 
-    @Test(expected = InvalidMessageException.class)
+    @Test
     public void detectIsMessageWithoutTitle() throws Exception {
         String recipient = "recipient";
         String title = "";
         String content = "content";
         Message message = new Message(recipient, title, content);
 
-        validator.isValid(message);
+        boolean result = validator.isValid(message);
+        assertThat(result, is(false));
     }
 
-    @Test(expected = InvalidMessageException.class)
+    @Test
     public void detectIsEmptyMessage() throws Exception {
         String recipient = "recipient";
         String title = "title";
         String content = "";
         Message message = new Message(recipient, title, content);
 
-        validator.isValid(message);
+        boolean result = validator.isValid(message);
+        assertThat(result, is(false));
     }
 
-    @Test(expected = InvalidMessageException.class)
+    @Test
     public void detectedIsMessageWithoutTitleAndRecipient() throws Exception {
         String recipient = "";
         String title = "";
         String content = "";
         Message message = new Message(recipient, title, content);
 
-        validator.isValid(message);
+        boolean result = validator.isValid(message);
+        assertThat(result, is(false));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void detectedIsNullValue() throws Exception {
         String content = "content";
         Message message = new Message(null, null, content);
 
-        validator.isValid(message);
+        boolean result = validator.isValid(message);
+        assertThat(result, is(false));
     }
 
-    @Test(expected = InvalidMessageException.class)
+    @Test
     public void detectedIsMessageOutOfRange() throws Exception {
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < 120; i++) {
-            buffer.append("content");
-        }
-
-        String content = buffer.toString();
         String recipient = "recipient";
-        String title = "title";
+        String title = "content";
+        String content = Strings.repeat("content", 120);
         Message message = new Message(recipient, title, content);
 
-        validator.isValid(message);
+        boolean result = validator.isValid(message);
+        assertThat(result, is(false));
     }
 }
 
