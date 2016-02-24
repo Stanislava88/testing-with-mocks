@@ -19,7 +19,6 @@ public class MessageValidatorTest {
         Message message = new Message(recipient, title, content);
 
         boolean result = validator.isValid(message);
-
         assertThat(result, is(true));
     }
 
@@ -83,7 +82,6 @@ public class MessageValidatorTest {
         String title = "content";
         String content = "sdsdsds";
         Message message = new Message(recipient, title, content);
-
 
         boolean result = validator.isValid(message);
         assertThat(result, is(false));
