@@ -15,60 +15,76 @@ public class MessageValidatorTest {
 
     @Test
     public void happyPath() throws Exception {
-        Message message = new Message("recipient", "title", "content");
+        String recipient = "recipient";
+        String title = "title";
+        String content = "content";
+        Message message = new Message(recipient, title, content);
+
         boolean result = validator.isValid(message);
 
         assertThat(result, is(true));
     }
 
-    @Test
+    @Test(expected = InvalidMessageException.class)
     public void detectIsMessageWithoutRecipient() throws Exception {
-        Message message = new Message("", "title", "content");
+        String recipient = "";
+        String title = "title";
+        String content = "content";
+        Message message = new Message(recipient, title, content);
 
-        try {
-            validator.isValid(message);
-            fail("Exception should be thrown! The recipient can't be empty");
-        } catch (InvalidMessageException ex) {
-
-            assertThat(ex.getRecipient(), is(""));
-        }
+        validator.isValid(message);
     }
 
-    @Test
+    @Test(expected = InvalidMessageException.class)
     public void detectIsMessageWithoutTitle() throws Exception {
-        Message message = new Message("recipient", "", "content");
+        String recipient = "recipient";
+        String title = "";
+        String content = "content";
+        Message message = new Message(recipient, title, content);
 
-        try {
-            validator.isValid(message);
-            fail("Exception should be thrown! The title can't be empty");
-        } catch (InvalidMessageException ex) {
-
-            assertThat(ex.getTitle(), is(equalTo("")));
-        }
+        validator.isValid(message);
     }
 
-    @Test
+    @Test(expected = InvalidMessageException.class)
     public void detectIsEmptyMessage() throws Exception {
-        Message message = new Message("recipient", "title", "");
+        String recipient = "recipient";
+        String title = "title";
+        String content = "";
+        Message message = new Message(recipient, title, content);
 
-        try {
-            validator.isValid(message);
-            fail("Exception should be thrown! The content can't be empty");
-        } catch (InvalidMessageException ex) {
-
-            assertThat(ex.getContent(), is(equalTo("")));
-        }
+        validator.isValid(message);
     }
 
     @Test(expected = InvalidMessageException.class)
     public void detectedIsMessageWithoutTitleAndRecipient() throws Exception {
-        Message message = new Message("", "", "content");
+        String recipient = "";
+        String title = "";
+        String content = "";
+        Message message = new Message(recipient, title, content);
+
         validator.isValid(message);
     }
 
     @Test(expected = NullPointerException.class)
     public void detectedIsNullValue() throws Exception {
-        Message message = new Message(null, null, "content");
+        String content = "content";
+        Message message = new Message(null, null, content);
+
+        validator.isValid(message);
+    }
+
+    @Test(expected = InvalidMessageException.class)
+    public void detectedIsMessageOutOfRange() throws Exception {
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < 120; i++) {
+            buffer.append("content");
+        }
+
+        String content = buffer.toString();
+        String recipient = "recipient";
+        String title = "title";
+        Message message = new Message(recipient, title, content);
+
         validator.isValid(message);
     }
 }
