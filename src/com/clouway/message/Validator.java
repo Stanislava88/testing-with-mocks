@@ -7,7 +7,7 @@ package com.clouway.message;
  */
 public interface Validator {
     /**
-     * Will return true if message is valid or throw exception otherwise
+     * Will return true if message is valid or return false otherwise
      *
      * @param message Inspected object
      * @return a report that report result of validation
