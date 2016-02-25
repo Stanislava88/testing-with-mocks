@@ -4,12 +4,10 @@ package com.clouway.service;
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
 public class UserService {
-    private User user;
     private final Database database;
     private final AgeValidator validator;
 
-    public UserService(User user, Database database, AgeValidator validator) {
-        this.user = user;
+    public UserService(Database database, AgeValidator validator) {
         this.database = database;
         this.validator = validator;
     }
@@ -21,7 +19,8 @@ public class UserService {
     }
 
     public boolean isAdult(String name) {
-        if (database.isUserDB(name) && validator.isAgeAdult(user.age)) {
+        User user = database.findUser(name);
+        if (user != null && validator.isAgeAdult(user.age)) {
             return true;
         }
         return false;

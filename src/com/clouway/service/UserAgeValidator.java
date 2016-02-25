@@ -4,12 +4,14 @@ package com.clouway.service;
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
 public class UserAgeValidator implements AgeValidator {
-    private int min;
+    private int minAge;
     private int max;
+    private int minAdultAge;
 
-    public UserAgeValidator(int min, int max) {
-        this.max = max;
-        this.min = min;
+    public UserAgeValidator(int minAge, int maxAge, int adultAge) {
+        this.minAge = minAge;
+        this.max = maxAge;
+        this.minAdultAge = adultAge;
     }
 
     @Override
@@ -17,11 +19,11 @@ public class UserAgeValidator implements AgeValidator {
         if (!age.matches("[0-9]+")) {
             return false;
         }
-        return !(Integer.parseInt(age) < min || Integer.parseInt(age) > max);
+        return !(Integer.parseInt(age) < minAge || Integer.parseInt(age) > max);
     }
 
     @Override
     public boolean isAgeAdult(String age) {
-        return Integer.parseInt(age) > max;
+        return Integer.parseInt(age) > minAdultAge;
     }
 }

@@ -8,8 +8,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
-public class AgeValidatorTest {
-    private AgeValidator validator = new UserAgeValidator(10, 100);
+public class UserAgeValidatorTest {
+    private AgeValidator validator = new UserAgeValidator(10, 100, 18);
 
     @Test
     public void happyPath() throws Exception {
@@ -48,22 +48,20 @@ public class AgeValidatorTest {
     }
 
     @Test
-    public void validateAdultUser() throws Exception {
-        AgeValidator validator = new UserAgeValidator(1, 18);
+    public void validateAdultAge() throws Exception {
         User user = new User("Ivan", "20");
 
-        boolean result=validator.isAgeAdult(user.age);
+        boolean result = validator.isAgeAdult(user.age);
 
-        assertThat(result,is(true));
+        assertThat(result, is(true));
     }
 
     @Test
     public void validateNoAdultUser() throws Exception {
-        AgeValidator validator = new UserAgeValidator(1, 18);
         User user = new User("Ivan", "9");
 
-        boolean result=validator.isAgeAdult(user.age);
+        boolean result = validator.isAgeAdult(user.age);
 
-        assertThat(result,is(false));
+        assertThat(result, is(false));
     }
 }

@@ -17,9 +17,8 @@ public interface AgeValidator {
     /**
      * Will return true if user is adult and false otherwise
      *
-     * @param name
-     * @return true or false
+     * @param age Inspected object
+     * @return report of validation
      */
-
-    boolean isAgeAdult(String name);
+    boolean isAgeAdult(String age);
 }
