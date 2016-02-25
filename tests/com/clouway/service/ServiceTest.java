@@ -16,16 +16,15 @@ public class ServiceTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
     private Database database = context.mock(Database.class);
-    private Validator validator = context.mock(Validator.class);
-
-    UserService service = new UserService(database, validator);
+    private AgeValidator validator = context.mock(AgeValidator.class);
 
     @Test
     public void happyPath() throws Exception {
         final User user = new User("Ivan", "20");
+        UserService service = new UserService(user, database, validator);
 
         context.checking(new Expectations() {{
-            oneOf(validator).isValid(user.age);
+            oneOf(validator).isAgeValid(user.age);
             will(returnValue(true));
 
             oneOf(database).save(user);
@@ -36,9 +35,10 @@ public class ServiceTest {
     @Test
     public void noRegisterInvalidUser() throws Exception {
         final User user = new User("Ivan", "120");
+        UserService service = new UserService(user, database, validator);
 
         context.checking(new Expectations() {{
-            oneOf(validator).isValid(user.age);
+            oneOf(validator).isAgeValid(user.age);
             will(returnValue(false));
 
             never(database).save(user);
@@ -47,30 +47,20 @@ public class ServiceTest {
     }
 
     @Test
-    public void findUser() throws Exception {
+    public void checkIsAdultUser() throws Exception {
         final User user = new User("Ivan", "20");
+        UserService service = new UserService(user,database, validator);
 
         context.checking(new Expectations() {{
+            oneOf(database).isUserDB(user.name);
+            will(returnValue(true));
 
-            oneOf(database).findUser(user);
+            oneOf(validator).isAgeAdult(user.age);
+            will(returnValue(true));
         }});
-
-        boolean result = service.find("18", new User("Ivan", "20"));
+        boolean result = service.isAdult("Ivan");
 
         assertThat(result, is(true));
-    }
-
-    @Test
-    public void notFindUser() throws Exception {
-        final User user = new User("Ivan", "20");
-
-        context.checking(new Expectations() {{
-            never(database).findUser(user);
-        }});
-
-        boolean result = service.find("18", new User("Ivan", "13"));
-
-        assertThat(result, is(false));
     }
 }
 
