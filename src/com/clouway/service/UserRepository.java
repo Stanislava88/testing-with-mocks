@@ -1,13 +1,13 @@
 package com.clouway.service;
 
 /**
- * This interface represent DB with users
+ * The implementation of this interface will be used to save and find user
  *
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
-public interface Database {
+public interface UserRepository {
     /**
-     * Save users in DB
+     * Save user
      *
      * @param user {@link com.clouway.service.User} to be save
      */
@@ -16,7 +16,7 @@ public interface Database {
     /**
      * Will return user
      *
-     * @param name search user by name
+     * @param name user name
      * @return report of searching
      */
     User findUser(String name);

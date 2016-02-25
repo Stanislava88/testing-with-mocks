@@ -15,17 +15,17 @@ public class UserServiceTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
-    private Database database = context.mock(Database.class);
+    private UserRepository database = context.mock(UserRepository.class);
     private AgeValidator validator = context.mock(AgeValidator.class);
 
     private UserService service = new UserService(database, validator);
 
     @Test
-    public void happyPath() throws Exception {
+    public void registerUser() throws Exception {
         final User user = new User("Ivan", "20");
 
         context.checking(new Expectations() {{
-            oneOf(validator).isAgeValid(user.age);
+            oneOf(validator).isValid(user.age);
             will(returnValue(true));
 
             oneOf(database).save(user);
@@ -34,11 +34,11 @@ public class UserServiceTest {
     }
 
     @Test
-    public void noRegisterInvalidUser() throws Exception {
+    public void registerOldUser() throws Exception {
         final User user = new User("Ivan", "120");
 
         context.checking(new Expectations() {{
-            oneOf(validator).isAgeValid(user.age);
+            oneOf(validator).isValid(user.age);
             will(returnValue(false));
 
             never(database).save(user);
@@ -47,36 +47,46 @@ public class UserServiceTest {
     }
 
     @Test
-    public void checkAdultUser() throws Exception {
+    public void registerYoungUser() throws Exception {
+        final User user = new User("Ivan", "5");
+
+        context.checking(new Expectations() {{
+            oneOf(validator).isValid(user.age);
+            will(returnValue(false));
+
+            never(database).save(user);
+        }});
+        service.register(user);
+    }
+
+    @Test
+    public void isAdult() throws Exception {
         final User user = new User("Ivan", "20");
+        String adultAge = "18";
 
         context.checking(new Expectations() {{
             oneOf(database).findUser(user.name);
             will(returnValue(user));
-
-            oneOf(validator).isAgeAdult(user.age);
-            will(returnValue(true));
         }});
-        boolean result = service.isAdult("Ivan");
+        boolean result = service.isAdult("Ivan", adultAge);
 
         assertThat(result, is(true));
     }
 
     @Test
-    public void checkNoAdultUser() throws Exception {
-        final String name="Maria";
+    public void isNotAdult() throws Exception {
+        final String name = "Maria";
+        String adultAge = "18";
         final User user = new User(name, "11");
 
         context.checking(new Expectations() {{
             oneOf(database).findUser(name);
             will(returnValue(user));
 
-            oneOf(validator).isAgeAdult(user.age);
-            will(returnValue(false));
         }});
-        boolean result = service.isAdult("Maria");
+        boolean result = service.isAdult("Maria", adultAge);
 
-        assertThat(result,is((false)));
+        assertThat(result, is((false)));
     }
 }
 
