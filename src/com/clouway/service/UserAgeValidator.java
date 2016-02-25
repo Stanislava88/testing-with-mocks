@@ -5,12 +5,12 @@ package com.clouway.service;
  */
 public class UserAgeValidator implements AgeValidator {
     private int minAge;
-    private int max;
+    private int maxAge;
     private int minAdultAge;
 
     public UserAgeValidator(int minAge, int maxAge, int adultAge) {
         this.minAge = minAge;
-        this.max = maxAge;
+        this.maxAge = maxAge;
         this.minAdultAge = adultAge;
     }
 
@@ -19,7 +19,7 @@ public class UserAgeValidator implements AgeValidator {
         if (!age.matches("[0-9]+")) {
             return false;
         }
-        return !(Integer.parseInt(age) < minAge || Integer.parseInt(age) > max);
+        return !(Integer.parseInt(age) < minAge || Integer.parseInt(age) > maxAge);
     }
 
     @Override
