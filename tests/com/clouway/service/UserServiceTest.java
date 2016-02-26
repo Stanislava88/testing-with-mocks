@@ -103,9 +103,5 @@ public class UserServiceTest {
         boolean result = service.isAdult("Lilia", adultAge);
         assertThat(result, is((false)));
     }
-
-
-    //todo add User("sdfdfd",null)
-    //todo User not Found
 }
 
