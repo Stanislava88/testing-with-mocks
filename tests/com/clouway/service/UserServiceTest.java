@@ -102,6 +102,7 @@ public class UserServiceTest {
 
         int adultAge = 18;
         boolean result = service.isAdult(null, adultAge);
+        
         assertThat(result, is((false)));
     }
 
@@ -114,6 +115,7 @@ public class UserServiceTest {
 
         int adultAge = 18;
         boolean result = service.isAdult("Lilia", adultAge);
+
         assertThat(result, is((false)));
     }
 }
