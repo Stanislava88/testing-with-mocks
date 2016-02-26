@@ -61,7 +61,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isAdult() throws Exception {
+    public void isUserAdult() throws Exception {
         final User user = new User("Ivan", "20");
 
         context.checking(new Expectations() {{
@@ -76,9 +76,9 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isNotAdult() throws Exception {
+    public void isUserNotAdult() throws Exception {
         final String name = "Maria";
-        final User user = new User(name, "11");
+        final User user = new User(name, "12");
 
         context.checking(new Expectations() {{
             oneOf(database).findByName(name);
@@ -92,31 +92,20 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isAdultNullUser() throws Exception {
-        final User user = null;
+    public void isUndefineUserAdult() throws Exception {
 
         context.checking(new Expectations() {{
-            oneOf(database).findByName(null);
-            will(returnValue(user));
-        }});
-
-        int adultAge = 18;
-        boolean result = service.isAdult(null, adultAge);
-        
-        assertThat(result, is((false)));
-    }
-
-    @Test
-    public void isAdultUnregisterUser() throws Exception {
-
-        context.checking(new Expectations() {{
-            allowing(database).findByName("Lilia");
+            oneOf(database).findByName("Lilia");
+            will(returnValue(null));
         }});
 
         int adultAge = 18;
         boolean result = service.isAdult("Lilia", adultAge);
-
         assertThat(result, is((false)));
     }
+
+
+    //todo add User("sdfdfd",null)
+    //todo User not Found
 }
 
