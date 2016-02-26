@@ -46,4 +46,13 @@ public class UserAgeValidatorTest {
 
         assertThat(result, is(false));
     }
+
+    @Test
+    public void validateNullAge() throws Exception {
+        User user = new User("Lilia", null);
+
+        boolean result = validator.isValid(user.age);
+
+        assertThat(result, is(false));
+    }
 }

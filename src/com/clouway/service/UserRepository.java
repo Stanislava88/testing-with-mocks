@@ -1,7 +1,7 @@
 package com.clouway.service;
 
 /**
- * The implementation of this interface will be used to save and find user
+ * The implementation of this interface will be used to save and find users
  *
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
@@ -19,5 +19,5 @@ public interface UserRepository {
      * @param name user name
      * @return report of searching
      */
-    User findUser(String name);
+    User findByName(String name);
 }

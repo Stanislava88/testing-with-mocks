@@ -14,6 +14,9 @@ public class UserAgeValidator implements AgeValidator {
 
     @Override
     public boolean isValid(String age) {
+        if (age == null) {
+            return false;
+        }
         if (!age.matches("[0-9]+")) {
             return false;
         }

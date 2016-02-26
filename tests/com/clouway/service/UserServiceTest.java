@@ -30,6 +30,7 @@ public class UserServiceTest {
 
             oneOf(database).save(user);
         }});
+
         service.register(user);
     }
 
@@ -43,6 +44,7 @@ public class UserServiceTest {
 
             never(database).save(user);
         }});
+
         service.register(user);
     }
 
@@ -53,21 +55,21 @@ public class UserServiceTest {
         context.checking(new Expectations() {{
             oneOf(validator).isValid(user.age);
             will(returnValue(false));
-
-            never(database).save(user);
         }});
+
         service.register(user);
     }
 
     @Test
     public void isAdult() throws Exception {
         final User user = new User("Ivan", "20");
-        String adultAge = "18";
 
         context.checking(new Expectations() {{
-            oneOf(database).findUser(user.name);
+            oneOf(database).findByName(user.name);
             will(returnValue(user));
         }});
+
+        int adultAge = 18;
         boolean result = service.isAdult("Ivan", adultAge);
 
         assertThat(result, is(true));
@@ -76,16 +78,42 @@ public class UserServiceTest {
     @Test
     public void isNotAdult() throws Exception {
         final String name = "Maria";
-        String adultAge = "18";
         final User user = new User(name, "11");
 
         context.checking(new Expectations() {{
-            oneOf(database).findUser(name);
+            oneOf(database).findByName(name);
             will(returnValue(user));
-
         }});
+
+        int adultAge = 18;
         boolean result = service.isAdult("Maria", adultAge);
 
+        assertThat(result, is((false)));
+    }
+
+    @Test
+    public void isAdultNullUser() throws Exception {
+        final User user = null;
+
+        context.checking(new Expectations() {{
+            oneOf(database).findByName(null);
+            will(returnValue(user));
+        }});
+
+        int adultAge = 18;
+        boolean result = service.isAdult(null, adultAge);
+        assertThat(result, is((false)));
+    }
+
+    @Test
+    public void isAdultUnregisterUser() throws Exception {
+
+        context.checking(new Expectations() {{
+            allowing(database).findByName("Lilia");
+        }});
+
+        int adultAge = 18;
+        boolean result = service.isAdult("Lilia", adultAge);
         assertThat(result, is((false)));
     }
 }
