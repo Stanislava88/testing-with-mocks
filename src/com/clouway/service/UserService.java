@@ -20,9 +20,11 @@ public class UserService {
 
     public boolean isAdult(String name, int adultAge) {
         User user = database.findByName(name);
+
         if (user == null) {
             return false;
         }
-        return user.name.equals(name) && Integer.parseInt(user.age) > adultAge;
+
+        return Integer.parseInt(user.age) > adultAge;
     }
 }

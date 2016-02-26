@@ -1,5 +1,6 @@
 package com.clouway.service;
 
+import org.hamcrest.Matchers;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
@@ -7,6 +8,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
@@ -70,13 +72,13 @@ public class UserServiceTest {
         }});
 
         int adultAge = 18;
-        boolean result = service.isAdult("Ivan", adultAge);
+        boolean isAdult = service.isAdult("Ivan", adultAge);
 
-        assertThat(result, is(true));
+        assertTrue(isAdult);
     }
 
     @Test
-    public void isUserNotAdult() throws Exception {
+    public void isUserMinor() throws Exception {
         final String name = "Maria";
         final User user = new User(name, "12");
 
@@ -88,12 +90,11 @@ public class UserServiceTest {
         int adultAge = 18;
         boolean result = service.isAdult("Maria", adultAge);
 
-        assertThat(result, is((false)));
+        assertThat(result, is((true)));
     }
 
     @Test
-    public void isUndefineUserAdult() throws Exception {
-
+    public void isAdultUndefinedUser() throws Exception {
         context.checking(new Expectations() {{
             oneOf(database).findByName("Lilia");
             will(returnValue(null));
@@ -101,6 +102,7 @@ public class UserServiceTest {
 
         int adultAge = 18;
         boolean result = service.isAdult("Lilia", adultAge);
+
         assertThat(result, is((false)));
     }
 }
