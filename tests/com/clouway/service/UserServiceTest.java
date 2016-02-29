@@ -1,13 +1,11 @@
 package com.clouway.service;
 
-import org.hamcrest.Matchers;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -63,7 +61,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isUserAdult() throws Exception {
+    public void isAdultUser() throws Exception {
         final User user = new User("Ivan", "20");
 
         context.checking(new Expectations() {{
@@ -78,7 +76,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isUserMinor() throws Exception {
+    public void isAdultMinorUser() throws Exception {
         final String name = "Maria";
         final User user = new User(name, "12");
 
@@ -88,9 +86,9 @@ public class UserServiceTest {
         }});
 
         int adultAge = 18;
-        boolean result = service.isAdult("Maria", adultAge);
+        boolean isAdult = service.isAdult("Maria", adultAge);
 
-        assertThat(result, is((true)));
+        assertFalse(isAdult);
     }
 
     @Test
@@ -101,9 +99,9 @@ public class UserServiceTest {
         }});
 
         int adultAge = 18;
-        boolean result = service.isAdult("Lilia", adultAge);
+        boolean isAdult = service.isAdult("Lilia", adultAge);
 
-        assertThat(result, is((false)));
+        assertFalse(isAdult);
     }
 }
 
